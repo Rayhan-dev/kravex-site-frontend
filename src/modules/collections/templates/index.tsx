@@ -89,11 +89,10 @@ export default async function CollectionTemplate({
             Collection
           </p>
           <h1
-            className="text-white"
+            className="text-white font-bebas"
             style={{
-              fontFamily: "var(--font-bebas-neue), 'Bebas Neue', sans-serif",
-              fontSize: "clamp(2.5rem, 9vw, 6.5rem)",
-              letterSpacing: "0.03em",
+              fontSize: "clamp(3rem, 11vw, 8rem)",
+              letterSpacing: "0.02em",
               lineHeight: 1,
             }}
           >
@@ -121,7 +120,7 @@ export default async function CollectionTemplate({
           <Layout className="mt-12 mb-26 md:mb-36">
             {collectionDetails.data.collection_page_heading && (
               <LayoutColumn start={1} end={{ base: 13, lg: 7 }}>
-                <h3 className="text-md max-md:mb-6 md:text-2xl">
+                <h3 className="font-bebas leading-none max-md:mb-6" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", letterSpacing: "0.02em" }}>
                   {collectionDetails.data.collection_page_heading}
                 </h3>
               </LayoutColumn>

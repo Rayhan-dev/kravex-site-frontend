@@ -72,7 +72,7 @@ const RefinementList = ({
   return (
     <Layout className="mb-6 md:mb-8">
       <LayoutColumn>
-        <h2 className="text-md md:text-2xl mb-6 md:mb-7" id="products">
+        <h2 className="font-bebas leading-none mb-6 md:mb-7" id="products" style={{ fontSize: "clamp(1.5rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}>
           {title}
         </h2>
         <div className="flex justify-between gap-10">

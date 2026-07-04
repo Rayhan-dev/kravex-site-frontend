@@ -19,6 +19,11 @@ const CartDrawer = dynamic(
   { loading: () => <></> }
 )
 
+const CartButton = dynamic(
+  () => import("@/components/CartDrawer").then((mod) => mod.CartButton),
+  { loading: () => <></> }
+)
+
 export const Header: React.FC = async () => {
   const [regions, { productTypes }] = await Promise.all([
     listRegions(),
@@ -46,16 +51,17 @@ export const Header: React.FC = async () => {
         <Layout>
           <LayoutColumn>
             <div className="flex justify-between items-center h-18 md:h-21">
-              <h1 className="font-medium text-md">
-                <LocalizedLink href="/">Kravex</LocalizedLink>
+              <h1 className="leading-none">
+                <LocalizedLink href="/" className="font-bebas text-[1.75rem] tracking-[0.05em] leading-none">Kravex</LocalizedLink>
               </h1>
               <div className="flex items-center gap-6 max-md:hidden">
-                <LocalizedLink href="/store">Shop All</LocalizedLink>
+                <LocalizedLink href="/store" className="text-[11px] tracking-[0.15em] uppercase font-medium">Shop All</LocalizedLink>
                 {navTypes.map((type) => (
                   <React.Fragment key={type.id}>
                     <span className="h-3 w-px bg-black/25 shrink-0" aria-hidden />
                     <LocalizedLink
                       href={`/store?type=${encodeURIComponent(type.value)}`}
+                      className="text-[11px] tracking-[0.15em] uppercase font-medium"
                     >
                       {type.value}
                     </LocalizedLink>
@@ -67,11 +73,11 @@ export const Header: React.FC = async () => {
                   <SearchField countryOptions={countryOptions} />
                 </React.Suspense>
                 <LoginLink className="p-1 text-black" />
-                <CartDrawer />
+                <CartButton />
               </div>
               <div className="flex items-center gap-4 md:hidden">
                 <LoginLink className="p-1 text-black" />
-                <CartDrawer />
+                <CartButton />
                 <React.Suspense>
                   <HeaderDrawer
                     countryOptions={countryOptions}
@@ -83,6 +89,8 @@ export const Header: React.FC = async () => {
           </LayoutColumn>
         </Layout>
       </HeaderWrapper>
+      {/* Single drawer overlay for the whole app (rendered once). */}
+      <CartDrawer />
     </>
   )
 }

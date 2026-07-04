@@ -2,9 +2,11 @@ import { Metadata } from "next"
 import Image from "next/image"
 import { getRegion } from "@lib/data/regions"
 import { getProductTypesList } from "@lib/data/product-types"
+import { getProductsList } from "@lib/data/products"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { LocalizedLink } from "@/components/LocalizedLink"
 import { CollectionsSection } from "@/components/CollectionsSection"
+import { RecentlyAddedProducts } from "@/components/RecentlyAddedProducts"
 
 export const metadata: Metadata = {
   title: "Kravex | Anime & Game Katanas in Bangladesh",
@@ -58,8 +60,6 @@ const CARDS = [
     series: "Demon Slayer",
     name: "Nichirin Blade",
     desc: "Tanjiro, Rengoku, Shinobu & more",
-    accent: "#b03a2e",
-    bg: "#fdf6ee",
     rotate: "-4deg",
     tx: "-6px",
     ty: "-10px",
@@ -70,8 +70,6 @@ const CARDS = [
     series: "One Piece",
     name: "Wado Ichimonji",
     desc: "Zoro's three-sword style",
-    accent: "#1a6fa8",
-    bg: "#eef6fd",
     rotate: "3deg",
     tx: "6px",
     ty: "6px",
@@ -82,8 +80,6 @@ const CARDS = [
     series: "Bleach",
     name: "Zanpakuto Series",
     desc: "Ichigo, Byakuya & Rukia",
-    accent: "#6c3483",
-    bg: "#f5effe",
     rotate: "4deg",
     tx: "16px",
     ty: "-4px",
@@ -94,14 +90,31 @@ const CARDS = [
     series: "Valorant",
     name: "Agent Knives",
     desc: "Elderflame & fan favourites",
-    accent: "#c0392b",
-    bg: "#fdf0f0",
     rotate: "-2deg",
     tx: "-10px",
     ty: "10px",
     delay: "0.5s",
   },
 ]
+
+const RecentlyAddedSection: React.FC<{ countryCode: string }> = async ({
+  countryCode,
+}) => {
+  const {
+    response: { products },
+  } = await getProductsList({
+    queryParams: { limit: 8, order: "-created_at" },
+    countryCode,
+  })
+
+  if (!products.length) {
+    return null
+  }
+
+  return (
+    <RecentlyAddedProducts products={products} className="mb-22 md:mb-36" />
+  )
+}
 
 const ProductTypesSection: React.FC = async () => {
   const productTypes = await getProductTypesList(0, 20, [
@@ -113,7 +126,7 @@ const ProductTypesSection: React.FC = async () => {
   return (
     <Layout className="mb-26 md:mb-36 max-md:gap-x-2">
       <LayoutColumn>
-        <h3 className="text-md md:text-2xl mb-8 md:mb-15">Our products</h3>
+        <h3 className="font-bebas text-[2rem] md:text-[3rem] tracking-[0.02em] leading-none mb-8 md:mb-15">Our Products</h3>
       </LayoutColumn>
       {productTypes.productTypes.map((productType, index) => (
         <LayoutColumn
@@ -167,19 +180,19 @@ export default async function Home({
           50%    {transform:translateY(-14px) scale(1.5);}
         }
         @keyframes kx-card-in {
-          from{opacity:0;translate:0 28px;}
+          from{opacity:0;translate:0 20px;}
           to  {opacity:1;translate:0 0;}
         }
         .kx-dragon-logo{animation:kx-breathe 3.2s ease-in-out infinite,kx-float 4.5s ease-in-out infinite;}
         .kx-dragon-wm  {animation:kx-wm-float 6s ease-in-out infinite;}
         .kx-card{
-          animation:kx-card-in 0.65s cubic-bezier(0.34,1.56,0.64,1) both;
-          transition:box-shadow 0.2s ease,translate 0.2s ease;
+          animation:kx-card-in 0.55s ease both;
+          transition:translate 0.2s ease,border-color 0.2s ease;
         }
-        .kx-card:hover{translate:0 -6px;box-shadow:0 24px 48px rgba(0,0,0,0.13);}
+        .kx-card:hover{translate:0 -5px;border-color:rgba(0,0,0,0.3);}
         .kx-diag{background-image:repeating-linear-gradient(-45deg,transparent,transparent 38px,rgba(0,0,0,0.033) 38px,rgba(0,0,0,0.033) 39px);}
         .kx-btn{transition:background-color 0.18s ease,letter-spacing 0.18s ease;}
-        .kx-btn:hover{background-color:rgba(0,0,0,0.78);letter-spacing:0.22em;}
+        .kx-btn:hover{background-color:rgba(5,5,5,0.8);letter-spacing:0.22em;}
       `}</style>
 
       {/* HERO */}
@@ -191,28 +204,28 @@ export default async function Home({
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 flex flex-col lg:flex-row items-center gap-16 lg:gap-8 py-20 lg:py-28">
           {/* LEFT */}
           <div className="flex-1 flex flex-col items-start">
-            <div className="kx-dragon-logo w-16 h-16 lg:w-24 lg:h-24 mb-5 text-black">
+            <div className="kx-dragon-logo w-14 h-14 lg:w-20 lg:h-20 mb-6 text-black">
               <DragonSVG className="w-full h-full" />
             </div>
-            <div className="w-28 lg:w-40 h-px bg-black mb-6" />
+            <div className="w-20 h-px bg-black mb-6" />
             <h1
-              className="font-bold leading-none tracking-tight text-black mb-5"
-              style={{ fontSize: "clamp(3.2rem,9vw,7rem)" }}
+              className="font-bebas leading-none text-black mb-4"
+              style={{ fontSize: "clamp(5rem,14vw,10rem)", letterSpacing: "0.02em" }}
             >
               KRAVEX
             </h1>
-            <p className="text-base lg:text-xl font-bold text-black mb-3 leading-snug max-w-xs">
-              Anime Katanas and swords.
+            <p className="text-sm font-medium text-black mb-2 leading-snug max-w-xs">
+              Anime Katanas and Swords.
             </p>
             <p
-              className="text-xs lg:text-sm mb-10 tracking-widest"
-              style={{ color: "rgba(0,0,0,0.45)" }}
+              className="text-[11px] mb-10 tracking-[0.25em] uppercase"
+              style={{ color: "rgba(0,0,0,0.40)" }}
             >
-              Katanas&nbsp;&bull;&nbsp;Character&nbsp;Knives&nbsp;&bull;&nbsp;Themed&nbsp;Accessories
+              Katanas&nbsp;&bull;&nbsp;Character&nbsp;Knives&nbsp;&bull;&nbsp;Accessories
             </p>
             <LocalizedLink
               href="/store"
-              className="kx-btn inline-block bg-black px-8 py-4 text-xs font-bold tracking-[0.18em] uppercase"
+              className="kx-btn inline-block bg-black px-8 py-4 text-[11px] font-semibold tracking-[0.2em] uppercase"
               style={{ color: "#ede8d0" }}
             >
               Shop Now
@@ -228,14 +241,13 @@ export default async function Home({
             >
               <DragonSVG className="w-[160%] h-[160%] text-black" />
             </div>
-            <div className="relative grid grid-cols-2 gap-3 lg:gap-5 p-2 lg:p-6">
+            <div className="relative grid grid-cols-2 gap-3 lg:gap-4 p-2 lg:p-6">
               {CARDS.map((card) => (
                 <LocalizedLink
                   key={card.id}
                   href="/store"
-                  className="kx-card block rounded-2xl lg:rounded-3xl p-4 lg:p-5 shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+                  className="kx-card block p-4 lg:p-5 border border-black/10 bg-[#ede8d0]"
                   style={{
-                    backgroundColor: card.bg,
                     transform: `rotate(${card.rotate}) translate(${card.tx},${card.ty})`,
                     animationDelay: card.delay,
                   }}
@@ -248,63 +260,57 @@ export default async function Home({
                     >
                       <path
                         d="M20 14 L132 5 L137 12 L132 19 L20 20Z"
-                        fill={card.accent}
-                        opacity="0.82"
+                        fill="currentColor"
+                        opacity="0.75"
                       />
                       <ellipse
                         cx="20"
                         cy="17"
                         rx="5"
                         ry="11"
-                        fill={card.accent}
+                        fill="currentColor"
                       />
                       <rect
                         x="2"
                         y="12"
                         width="20"
                         height="10"
-                        rx="2"
-                        fill={card.accent}
-                        opacity="0.6"
+                        rx="0"
+                        fill="currentColor"
+                        opacity="0.5"
                       />
                       <line
                         x1="8"
                         y1="12"
                         x2="8"
                         y2="22"
-                        stroke="white"
+                        stroke="#ede8d0"
                         strokeWidth="1"
-                        opacity="0.35"
+                        opacity="0.5"
                       />
                       <line
                         x1="14"
                         y1="12"
                         x2="14"
                         y2="22"
-                        stroke="white"
+                        stroke="#ede8d0"
                         strokeWidth="1"
-                        opacity="0.35"
+                        opacity="0.5"
                       />
                       <path
                         d="M32 8 L132 5 L132 8 L32 11Z"
-                        fill="white"
-                        opacity="0.28"
+                        fill="#ede8d0"
+                        opacity="0.25"
                       />
                     </svg>
                   </div>
-                  <p
-                    className="text-[10px] lg:text-[11px] font-black uppercase tracking-widest mb-1"
-                    style={{ color: card.accent }}
-                  >
+                  <p className="text-[10px] lg:text-[11px] font-semibold uppercase tracking-[0.2em] mb-1 text-black/40">
                     {card.series}
                   </p>
-                  <p className="text-xs lg:text-sm font-bold text-black leading-tight mb-1">
+                  <p className="text-xs lg:text-sm font-semibold text-black leading-tight mb-1">
                     {card.name}
                   </p>
-                  <p
-                    className="text-[10px] lg:text-xs leading-snug"
-                    style={{ color: "rgba(0,0,0,0.38)" }}
-                  >
+                  <p className="text-[10px] lg:text-xs leading-snug text-black/35">
                     {card.desc}
                   </p>
                 </LocalizedLink>
@@ -316,6 +322,7 @@ export default async function Home({
 
       {/* BELOW HERO */}
       <div className="pt-8 pb-26 md:pt-26 md:pb-36">
+        <RecentlyAddedSection countryCode={countryCode} />
         <CollectionsSection className="mb-22 md:mb-36" />
         <ProductTypesSection />
       </div>

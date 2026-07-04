@@ -60,6 +60,23 @@ export const getProductFashionDataByHandle = async function (handle: string) {
   })
 }
 
+export const getProductPageData = async function (
+  handle: string,
+  countryCode: string
+) {
+  const region = await getRegion(countryCode)
+  if (!region) return null
+
+  const [product, fashionData] = await Promise.all([
+    getProductByHandle(handle, region.id),
+    getProductFashionDataByHandle(handle),
+  ])
+
+  if (!product) return null
+
+  return { product, materials: fashionData.materials, region }
+}
+
 export const getProductsList = async function ({
   pageParam = 1,
   queryParams,

@@ -17,20 +17,20 @@ export const SidebarNav: React.FC = () => {
       <LocalizedLink
         href="/account"
         className={twJoin(
-          "inline-flex items-start py-4 max-md:whitespace-nowrap",
-          currentPath === "/account" && "font-semibold"
+          "inline-flex items-start py-4 max-md:whitespace-nowrap text-[11px] tracking-[0.15em] uppercase",
+          currentPath === "/account" ? "font-semibold" : "font-medium text-black/60"
         )}
       >
-        Personal &amp; security
+        Personal &amp; Security
       </LocalizedLink>
       <LocalizedLink
         href="/account/my-orders"
         className={twJoin(
-          "inline-flex items-start py-4 max-md:whitespace-nowrap",
-          currentPath.startsWith("/account/my-orders") && "font-semibold"
+          "inline-flex items-start py-4 max-md:whitespace-nowrap text-[11px] tracking-[0.15em] uppercase",
+          currentPath.startsWith("/account/my-orders") ? "font-semibold" : "font-medium text-black/60"
         )}
       >
-        My orders
+        My Orders
       </LocalizedLink>
     </>
   )

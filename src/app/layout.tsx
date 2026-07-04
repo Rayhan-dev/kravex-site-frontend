@@ -1,11 +1,12 @@
 import { Metadata } from "next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Bebas_Neue, JetBrains_Mono } from "next/font/google"
+import { Bebas_Neue, Hanken_Grotesk } from "next/font/google"
 import { getBaseURL } from "@lib/util/env"
 
 import "../styles/globals.css"
 import React from "react"
 import { WebMCPProvider } from "@lib/webmcp/WebMCPProvider"
+import { WhatsAppButton } from "@/components/WhatsAppButton"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
@@ -47,15 +48,6 @@ export const metadata: Metadata = {
   },
 }
 
-const jetbrainsMono = JetBrains_Mono({
-  preload: true,
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  display: "swap",
-  weight: "variable",
-  variable: "--font-jetbrains-mono",
-})
-
 const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
@@ -63,11 +55,23 @@ const bebasNeue = Bebas_Neue({
   variable: "--font-bebas-neue",
 })
 
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "700"],
+  variable: "--font-hanken",
+})
+
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en-BD" data-mode="light" className="antialiased">
-      <body className={`${jetbrainsMono.className} ${bebasNeue.variable}`}>
+    <html
+      lang="en-BD"
+      data-mode="light"
+      className={`antialiased ${hankenGrotesk.variable} ${bebasNeue.variable}`}
+    >
+      <body>
         <main className="relative">{props.children}</main>
+        <WhatsAppButton />
         <SpeedInsights />
         <WebMCPProvider />
       </body>

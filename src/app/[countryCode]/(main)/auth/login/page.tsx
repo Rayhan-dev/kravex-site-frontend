@@ -46,8 +46,8 @@ function DragonPanel() {
       {/* brand text */}
       <div className="relative z-10">
         <div className="w-20 h-px bg-black mb-4" />
-        <p className="text-[3.5rem] font-bold leading-none tracking-tight text-black mb-3">KRAVEX</p>
-        <p className="text-sm text-black/50 tracking-widest uppercase">Anime &bull; Katanas &bull; Collectibles</p>
+        <p className="font-bebas text-[5rem] leading-none text-black mb-3" style={{ letterSpacing: "0.02em" }}>KRAVEX</p>
+        <p className="text-[11px] text-black/45 tracking-[0.2em] uppercase">Anime &bull; Katanas &bull; Collectibles</p>
       </div>
     </div>
   )
@@ -69,8 +69,11 @@ export default async function LoginPage({
     <div className="flex min-h-screen">
       <DragonPanel />
       <div className="shrink-0 max-w-100 lg:max-w-96 w-full mx-auto pt-30 lg:pt-37 pb-16 max-sm:px-4">
-        <h1 className="text-xl md:text-2xl mb-10 md:mb-16">
-          Welcome back to Kravex!
+        <h1
+          className="font-bebas leading-none mb-10 md:mb-14"
+          style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", letterSpacing: "0.02em" }}
+        >
+          Welcome Back
         </h1>
         <LoginForm
           className="mb-10 md:mb-15"

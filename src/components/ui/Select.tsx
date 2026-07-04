@@ -16,7 +16,7 @@ export const UiSelectButton: React.FC<
     className={twMerge(
       "w-full gap-1 md:gap-2 flex items-center focus:border-grayscale-500 max-md:text-xs justify-between h-8 md:h-10 px-3 md:pl-4 md:pr-3 focus-visible:outline-none transition-colors",
       variant === "outline" &&
-        "border border-grayscale-200 rounded-xs hover:border-grayscale-500 hover:text-grayscale-500",
+        "border border-black/30 rounded-none hover:border-black focus:border-black",
       className as string
     )}
   />
@@ -50,7 +50,7 @@ export const UiSelectListBox = <T extends object>({
   <ReactAria.ListBox
     {...props}
     className={twMerge(
-      "border border-grayscale-200 bg-white rounded-xs focus-visible:outline-none max-h-50 overflow-scroll",
+      "border border-black bg-cream rounded-none focus-visible:outline-none max-h-50 overflow-scroll",
       className as string
     )}
   />
@@ -63,7 +63,7 @@ export const UiSelectListBoxItem: React.FC<ReactAria.ListBoxItemProps> = ({
   <ReactAria.ListBoxItem
     {...props}
     className={twMerge(
-      "cursor-pointer p-4 focus-visible:outline-none data-[selected]:font-semibold hover:bg-grayscale-50 transition-colors",
+      "cursor-pointer p-4 focus-visible:outline-none data-[selected]:font-semibold hover:bg-black hover:text-cream transition-colors",
       className as string
     )}
   />
@@ -76,7 +76,7 @@ export const UiSelectDialog: React.FC<ReactAria.DialogProps> = ({
   <ReactAria.Dialog
     {...props}
     className={twMerge(
-      "border border-grayscale-200 bg-white rounded-xs focus-visible:outline-none",
+      "border border-black bg-cream rounded-none focus-visible:outline-none",
       className
     )}
   />

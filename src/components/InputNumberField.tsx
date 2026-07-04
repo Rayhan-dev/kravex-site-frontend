@@ -166,7 +166,7 @@ export const InputNumberField: React.FC<InputNumberFieldProps> = ({
   return (
     <div
       className={twMerge(
-        "flex justify-between border border-grayscale-200 rounded-xs",
+        "flex justify-between border border-black/20 rounded-xs bg-transparent",
         size === "sm" ? "h-8 px-4" : "h-12 px-6",
         className as string
       )}
@@ -174,7 +174,7 @@ export const InputNumberField: React.FC<InputNumberFieldProps> = ({
       <ReactAria.Button
         onPress={handleDecrement}
         isDisabled={isDisabled || !canDecrement}
-        className="disabled:text-grayscale-200 transition-colors shrink-0"
+        className="disabled:text-black/20 transition-colors shrink-0"
       >
         <Icon
           name="minus"
@@ -204,14 +204,14 @@ export const InputNumberField: React.FC<InputNumberFieldProps> = ({
         }}
         disabled={isDisabled}
         className={twJoin(
-          "disabled:text-grayscale-200 disabled:bg-transparent text-center focus-within:outline-none w-7 leading-none appearance-none [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+          "bg-transparent disabled:text-black/20 text-center focus-within:outline-none w-7 leading-none appearance-none [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
           size === "sm" ? "text-xs" : "text-sm"
         )}
       />
       <ReactAria.Button
         onPress={handleIncrement}
         isDisabled={isDisabled || !canIncrement}
-        className="disabled:text-grayscale-200 transition-colors shrink-0"
+        className="disabled:text-black/20 transition-colors shrink-0"
       >
         <Icon
           name="plus"

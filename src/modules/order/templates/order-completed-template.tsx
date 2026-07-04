@@ -28,8 +28,11 @@ export default async function OrderCompletedTemplate({
         start={{ base: 1, lg: 3, xl: 4 }}
         end={{ base: 13, lg: 11, xl: 10 }}
       >
-        <h1 className="text-md md:text-2xl mb-8 md:mb-16">
-          Thank you for your order!
+        <h1
+          className="font-bebas leading-none mb-8 md:mb-16"
+          style={{ fontSize: "clamp(2rem, 5vw, 4rem)", letterSpacing: "0.02em" }}
+        >
+          Thank You for Your Order
         </h1>
         <p className="mb-4">
           We are pleased to confirm that your order has been successfully placed

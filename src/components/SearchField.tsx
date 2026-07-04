@@ -34,7 +34,11 @@ export const SearchField: React.FC<{
     label: string | undefined
   }[]
   isInputAlwaysShown?: boolean
-}> = ({ countryOptions, isInputAlwaysShown }) => {
+  /** Extra classes for the outer flex container */
+  className?: string
+  /** Extra classes for the input width container */
+  inputContainerClassName?: string
+}> = ({ countryOptions, isInputAlwaysShown, className, inputContainerClassName }) => {
   const router = useRouter()
   const [isInputShown, setIsInputShown] = React.useState(false)
   const countryCode = useCountryCode()
@@ -111,18 +115,18 @@ export const SearchField: React.FC<{
   }, [])
 
   return (
-    <div className="flex">
+    <div className={twJoin("flex", className)}>
       <Button
         onPress={buttonPressHandle}
         variant="ghost"
-        className="p-1 text-black"
+        className="p-1 text-black shrink-0"
         aria-label="Open search"
       >
         <Icon name="search" className="w-5 h-5" />
       </Button>
       <ReactAria.ComboBox
         allowsCustomValue
-        className="overflow-hidden"
+        className="overflow-hidden flex-1"
         aria-label="Search"
         items={list.items}
         inputValue={list.filterText}
@@ -132,39 +136,42 @@ export const SearchField: React.FC<{
       >
         <div
           className={twJoin(
-            "overflow-hidden transition-width duration-500 h-full max-w-40 md:max-w-30",
-            isInputShown ? "w-full md:w-30" : "md:w-0"
+            "overflow-hidden transition-width duration-500 h-full",
+            inputContainerClassName ?? "max-w-40 md:max-w-30",
+            isInputShown ? "w-full" : "md:w-0"
           )}
         >
-          <Input className="px-0 disabled:bg-transparent !py-0 h-7 md:h-6 max-md:border-0 border-black rounded-none border-t-0 border-x-0 group-data-[light=true]:md:border-white group-data-[sticky=true]:md:border-black ml-2 md:ml-1" />
+          <Input className="px-0 disabled:bg-transparent !py-0 h-7 md:h-6 border-black/40 focus:border-black ml-2 md:ml-1" />
         </div>
         <ReactAria.Popover
           placement="bottom end"
           containerPadding={10}
-          maxHeight={243}
-          offset={25}
-          className="max-w-90 md:max-w-95 lg:max-w-98 w-full bg-white rounded-xs border border-grayscale-200 overflow-y-scroll"
+          maxHeight={320}
+          offset={8}
+          className="max-w-90 md:max-w-95 lg:max-w-98 w-full bg-cream border border-black overflow-y-auto font-hanken"
         >
           <ReactAria.ListBox className="outline-none">
             {(item: ListItem) => (
               <ReactAria.ListBoxItem
-                className="relative after:absolute after:content-[''] after:h-px after:bg-grayscale-100 after:-bottom-px after:left-6 after:right-6 last:after:hidden mb-px flex gap-6 p-6 transition-colors hover:bg-grayscale-50"
+                className="relative after:absolute after:content-[''] after:h-px after:bg-black/10 after:-bottom-px after:left-4 after:right-4 last:after:hidden flex items-center gap-3 px-4 py-3 transition-colors hover:bg-black/5 outline-none cursor-pointer"
                 key={item.handle}
                 id={item.handle}
                 href={`/${countryCode}/products/${item.handle}`}
               >
                 <Thumbnail
                   thumbnail={item.thumbnail}
-                  size="3/4"
-                  className="w-20"
+                  size="square"
+                  className="w-12 shrink-0 border border-black/10"
                 />
-                <div>
-                  <p className="text-base font-normal">{item.title}</p>
-                  <p className="text-grayscale-500 text-xs">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium leading-tight truncate">
+                    {item.title}
+                  </p>
+                  <p className="text-black/40 text-[11px] mt-1 uppercase tracking-[0.1em] truncate">
                     {item.variants[0]}
                   </p>
                 </div>
-                <p className="text-base font-semibold ml-auto">
+                <p className="text-sm font-semibold shrink-0 tabular-nums">
                   {item.price?.calculated_price}
                 </p>
               </ReactAria.ListBoxItem>

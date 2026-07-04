@@ -94,7 +94,7 @@ export const getInputClassNames = ({
   const successClasses = isSuccess ? "border-green-500 pr-7" : ""
 
   return twJoin(
-    "peer block w-full rounded-xs transition-all outline-none px-4 placeholder:invisible border border-black/20 hover:border-black/60 focus:border-black bg-transparent disabled:pointer-events-none disabled:opacity-40 [&:autofill]:bg-clip-text aria-[invalid=true]:border-red-primary aria-[invalid=true]:focus:border-red-900 aria-[invalid=true]:hover:border-red-900",
+    "peer block w-full rounded-none transition-all outline-none px-0 placeholder:invisible border-0 border-b border-black/30 hover:border-black/70 focus:border-black bg-transparent disabled:pointer-events-none disabled:opacity-40 [&:autofill]:bg-clip-text aria-[invalid=true]:border-red-primary aria-[invalid=true]:focus:border-red-900 aria-[invalid=true]:hover:border-red-900",
     sizeClasses[uiSize],
     visuallyDisabledClasses,
     successClasses
@@ -111,7 +111,7 @@ export const getPlaceholderClassNames = ({
   }
 
   return twJoin(
-    "absolute -translate-y-1/2 peer-placeholder-shown:top-1/2 left-4 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:autofill]:translate-y-0 peer-focus:translate-y-0 text-black/40 pointer-events-none transition-all",
+    "absolute -translate-y-1/2 peer-placeholder-shown:top-1/2 left-0 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:autofill]:translate-y-0 peer-focus:translate-y-0 text-black/40 uppercase tracking-[0.1em] pointer-events-none transition-all",
     sizeClasses[uiSize]
   )
 }
@@ -208,7 +208,7 @@ export const Input = React.forwardRef<
       {isSuccess && (
         <Icon
           name="check"
-          className="absolute right-0 top-1/2 mr-4 -translate-y-1/2 text-green-500 w-6 h-auto"
+          className="absolute right-0 top-1/2 -translate-y-1/2 text-green-500 w-6 h-auto"
         />
       )}
       {errorMessage && (

@@ -44,6 +44,7 @@ export const paymentInfoMap: Record<
 }
 
 // Stripe disabled — always returns false. Re-enable when Stripe is restored.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const isStripe = (_providerId?: string): boolean => false
 
 export const isPaypal = (providerId?: string) => {

@@ -5,16 +5,25 @@
 @layer base {
   html {
     background-color: #ede8d0;
+    font-family: var(--font-hanken), 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
     @apply text-black font-normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
+  /* Kravex editorial: headlines are always Bebas Neue, all-caps */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-medium;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    font-family: var(--font-bebas-neue), 'Bebas Neue', sans-serif;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    @apply font-normal;
+    line-height: 1.05;
+  }
+
+  ::selection {
+    background-color: #050505;
+    color: #ede8d0;
   }
 
   a {

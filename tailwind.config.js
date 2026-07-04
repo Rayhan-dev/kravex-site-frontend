@@ -72,11 +72,14 @@ module.exports = {
       xs: ["0.75rem", 1.4],
       "2xs": ["0.625rem", 1.4],
     },
+    // Kravex design system: sharp 90-degree corners everywhere.
+    // Radius tokens are zeroed so legacy rounded-* classes render sharp;
+    // "full" is kept for radio dots, spinners and count badges.
     borderRadius: {
-      "2xs": "2px",
-      xs: "4px",
-      md: "24px",
-      lg: "30px",
+      "2xs": "0px",
+      xs: "0px",
+      md: "0px",
+      lg: "0px",
       full: "100%",
       none: "0px",
     },
@@ -153,6 +156,7 @@ module.exports = {
           "var(--font-jetbrains-mono), JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
         ],
         bebas: ["var(--font-bebas-neue)", "'Bebas Neue'", "sans-serif"],
+        hanken: ["var(--font-hanken)", "'Hanken Grotesk'", "ui-sans-serif", "sans-serif"],
       },
       transitionProperty: {
         fontWeight: "font-weight",

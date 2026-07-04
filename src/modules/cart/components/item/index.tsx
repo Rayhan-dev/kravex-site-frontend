@@ -54,7 +54,7 @@ const Item = ({ item, className }: ItemProps) => {
                 {item.product_title}
               </LocalizedLink>
             </h2>
-            <p className="text-grayscale-500 text-xs sm:text-base max-sm:mb-4">
+            <p className="text-black/40 text-xs sm:text-base max-sm:mb-4">
               {item.variant?.title}
             </p>
             <LineItemUnitPrice item={item} className="sm:hidden" />

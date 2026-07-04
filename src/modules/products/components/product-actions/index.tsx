@@ -76,33 +76,69 @@ const getInitialOptions = (product: ProductActionsProps["product"]) => {
   return null
 }
 
-function ProductDescription({ text }: { text?: string | null }) {
-  if (!text) return null
+// Renders a single bullet row. When the content reads like "Label: Value"
+// (e.g. "Length: 103 cm") it's shown as a two-column definition-list row —
+// the museum-placard / spec-sheet look. Otherwise it's an em-dash row.
+function DescriptionRow({ content }: { content: string }) {
+  const colonIdx = content.indexOf(":")
+  const isPair =
+    colonIdx > 0 && colonIdx <= 28 && colonIdx < content.length - 1
 
-  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean)
-  const isList = lines.every((l) => /^-\s*/.test(l))
-
-  if (isList) {
+  if (isPair) {
+    const label = content.slice(0, colonIdx).trim()
+    const value = content.slice(colonIdx + 1).trim()
     return (
-      <ul className="list-disc pl-4 flex flex-col gap-1">
-        {lines.map((l, i) => (
-          <li key={i}>{l.replace(/^-\s*/, "")}</li>
-        ))}
-      </ul>
+      <div className="flex justify-between items-baseline gap-6 py-3 border-b border-black/10">
+        <span className="text-xs uppercase tracking-[0.15em] text-black/45 shrink-0">
+          {label}
+        </span>
+        <span className="text-right font-medium leading-snug">{value}</span>
+      </div>
     )
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      {lines.map((l, i) =>
-        /^-\s*/.test(l) ? (
-          <ul key={i} className="list-disc pl-4">
-            <li>{l.replace(/^-\s*/, "")}</li>
-          </ul>
-        ) : (
-          <p key={i}>{l}</p>
-        )
-      )}
+    <div className="flex gap-3 py-3 border-b border-black/10">
+      <span aria-hidden className="text-black/30 select-none leading-relaxed">
+        —
+      </span>
+      <span className="leading-relaxed text-black/70">{content}</span>
+    </div>
+  )
+}
+
+function ProductDescription({ text }: { text?: string | null }) {
+  if (!text) return null
+
+  const rows = text
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((l) => ({
+      isBullet: /^-\s*/.test(l),
+      content: l.replace(/^-\s*/, ""),
+    }))
+
+  if (rows.length === 0) return null
+
+  const allBullets = rows.every((r) => r.isBullet)
+
+  return (
+    <div>
+      <p className="text-xs font-bold uppercase tracking-[0.15em] text-black/40 mb-4">
+        Details
+      </p>
+      <div className={allBullets ? "border-t border-black/10" : "flex flex-col gap-4"}>
+        {rows.map((row, i) =>
+          row.isBullet ? (
+            <DescriptionRow key={i} content={row.content} />
+          ) : (
+            <p key={i} className="leading-relaxed text-black/70">
+              {row.content}
+            </p>
+          )
+        )}
+      </div>
     </div>
   )
 }

@@ -33,9 +33,9 @@ export const getButtonClassNames = ({
     ghost: "text-black h-auto disabled:text-grayscale-200",
     unstyled: "text-black h-auto disabled:text-grayscale-200",
     outline:
-      "text-black hover:text-grayscale-500 hover:border-grayscale-500 border border-black disabled:text-grayscale-200 disabled:border-grayscale-200",
+      "text-black border border-black hover:bg-black hover:text-white disabled:text-grayscale-200 disabled:border-grayscale-200 disabled:bg-transparent",
     solid:
-      "bg-black hover:bg-grayscale-500 text-white disabled:bg-grayscale-200",
+      "bg-black text-white border border-black hover:bg-transparent hover:text-black disabled:bg-grayscale-200 disabled:border-grayscale-200 disabled:text-white",
     link: "text-black h-auto border-b border-current px-0 rounded-none disabled:text-grayscale-200 hover:border-transparent",
   }
 
@@ -55,10 +55,14 @@ export const getButtonClassNames = ({
       : ""
   const hasGap = (isLoading && loadingText) || iconName
   const sizeClasses =
-    size === "sm" ? "px-4 h-8 text-xs" : size === "md" ? "px-6 h-12" : ""
+    size === "sm"
+      ? "px-4 h-8 text-[11px] tracking-widest uppercase font-semibold"
+      : size === "md"
+        ? "px-6 h-12 text-xs tracking-widest uppercase font-semibold"
+        : ""
 
   return twJoin(
-    "inline-flex items-center focus-visible:outline-none rounded-xs justify-center transition-colors disabled:pointer-events-none",
+    "inline-flex items-center focus-visible:outline-none rounded-none justify-center transition-colors disabled:pointer-events-none",
     isFullWidth && "w-full",
     flexDirection,
     hasGap && "gap-2",

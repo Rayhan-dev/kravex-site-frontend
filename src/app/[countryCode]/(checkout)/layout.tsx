@@ -22,7 +22,7 @@ export default function CheckoutLayout({
       <Layout className="lg:hidden">
         <LayoutColumn>
           <div className="flex justify-between items-center h-18 border-b border-black/10">
-            <LocalizedLink href="/" className="text-md font-medium">
+            <LocalizedLink href="/" className="font-bebas text-[1.75rem] tracking-[0.05em] leading-none">
               Kravex
             </LocalizedLink>
             <p className="text-[10px] tracking-[0.25em] uppercase text-black/50">Checkout</p>
@@ -41,7 +41,7 @@ export default function CheckoutLayout({
           <div className="flex-1 pt-8 lg:max-w-125 xl:max-w-150 pb-9 lg:pb-40">
             <LocalizedLink
               href="/"
-              className="text-md font-medium mb-16 inline-block max-lg:hidden"
+              className="font-bebas text-[1.75rem] tracking-[0.05em] leading-none mb-16 inline-block max-lg:hidden"
             >
               Kravex
             </LocalizedLink>

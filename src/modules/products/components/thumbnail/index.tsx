@@ -8,6 +8,7 @@ import PlaceholderImage from "@modules/common/icons/placeholder-image"
 type ThumbnailProps = {
   thumbnail?: HttpTypes.StoreProduct["thumbnail"]
   images?: HttpTypes.StoreProduct["images"]
+  hoverImage?: string
   size?: "small" | "medium" | "large" | "full" | "square" | "3/4"
   isFeatured?: boolean
   className?: string
@@ -17,6 +18,7 @@ type ThumbnailProps = {
 const Thumbnail: React.FC<ThumbnailProps> = ({
   thumbnail,
   images,
+  hoverImage,
   size = "small",
   isFeatured,
   className,
@@ -41,6 +43,19 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       data-testid={dataTestid}
     >
       <ImageOrPlaceholder image={initialImage} size={size} />
+      {hoverImage && hoverImage !== initialImage && (
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+          <Image
+            src={hoverImage}
+            alt="Product alternate view"
+            className="absolute inset-0 object-cover object-center"
+            draggable={false}
+            quality={50}
+            sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
+            fill
+          />
+        </div>
+      )}
     </div>
   )
 }

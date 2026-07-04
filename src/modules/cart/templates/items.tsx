@@ -9,14 +9,19 @@ type ItemsTemplateProps = {
 const ItemsTemplate = ({ items }: ItemsTemplateProps) => {
   return (
     <div>
-      <div className="pb-8 md:pb-12 border-b border-b-grayscale-100">
-        <h1 className="md:text-2xl text-md leading-none">Your shopping cart</h1>
+      <div className="pb-8 md:pb-10 border-b border-black/10">
+        <h1 className="md:text-2xl text-md leading-none">Your cart</h1>
       </div>
       <div>
         {items
-          ? items
+          ? [...items]
               .sort((a, b) => {
-                return (a.created_at ?? "") > (b.created_at ?? "") ? -1 : 1
+                // Newest first; copy before sorting (never mutate the source
+                // array) and tie-break on id for a stable order across renders.
+                const at = (v?: Date | string | null) =>
+                  v ? new Date(v).getTime() : 0
+                const byDate = at(b.created_at) - at(a.created_at)
+                return byDate !== 0 ? byDate : a.id.localeCompare(b.id)
               })
               .map((item) => {
                 return <Item key={item.id} item={item} />

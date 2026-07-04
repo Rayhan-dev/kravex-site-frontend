@@ -59,11 +59,10 @@ const StoreTemplate = async ({
             Kravex
           </p>
           <h1
-            className="text-white"
+            className="text-white font-bebas"
             style={{
-              fontFamily: "var(--font-bebas-neue), 'Bebas Neue', sans-serif",
-              fontSize: "clamp(2.5rem, 9vw, 6.5rem)",
-              letterSpacing: "0.03em",
+              fontSize: "clamp(3rem, 11vw, 8rem)",
+              letterSpacing: "0.02em",
               lineHeight: 1,
             }}
           >
@@ -71,7 +70,7 @@ const StoreTemplate = async ({
           </h1>
           <p
             className="text-white/30 mt-3"
-            style={{ fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase" }}
+            style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase" }}
           >
             Katanas &middot; Knives &middot; Collectibles
           </p>

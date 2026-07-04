@@ -1,4 +1,4 @@
-import Product from "@modules/products/components/product-preview"
+import { ProductPreviewWithProvider as Product } from "@modules/products/components/product-preview"
 import { getRegion } from "@lib/data/regions"
 import { getProductsList } from "@lib/data/products"
 import { HttpTypes } from "@medusajs/types"

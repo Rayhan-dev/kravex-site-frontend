@@ -26,7 +26,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         className={twMerge(
           "flex justify-self-center overflow-y-scroll max-h-screen h-screen max-w-75 rounded-none",
           colorScheme === "light"
-            ? "bg-white text-black"
+            ? "bg-cream text-black border-l border-black"
             : "bg-black text-white",
           className
         )}

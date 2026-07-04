@@ -379,6 +379,12 @@ export const useAddLineItem = (
         queryKey: ["cart"],
       })
 
+      // Notify the cart drawer to open so the user sees the item they just
+      // added (works from anywhere: product page, grid quick-add, quick view).
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("kravex:cart-add"))
+      }
+
       await options?.onSuccess?.(...args)
     },
   })
@@ -545,6 +551,7 @@ export const useInitiatePaymentSession = (
 export const useSetPaymentMethod = () => {
   return useMutation({
     mutationKey: ["set-payment"],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mutationFn: async (_payload: { sessionId: string; token: string | null | undefined }) => {
       throw new Error("Stripe is disabled")
     },

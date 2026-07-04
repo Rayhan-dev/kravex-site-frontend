@@ -44,7 +44,7 @@ type FormValues = z.infer<typeof formSchema>
 
 // ── Input class ──────────────────────────────────────────────────────────────
 const inputCls =
-  "block w-full h-14 rounded-xs outline-none px-4 border border-black/20 hover:border-black/60 focus:border-black bg-transparent transition-all placeholder:text-black/30 text-black"
+  "block w-full h-12 rounded-none outline-none px-0 border-0 border-b border-black/20 hover:border-black/60 focus:border-black bg-transparent transition-colors placeholder:text-black/25 text-black"
 
 // ── Field ────────────────────────────────────────────────────────────────────
 const Field: React.FC<{
@@ -176,11 +176,10 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
       if (!emailRes?.success) throw new Error(emailRes?.error || "Could not set email")
 
       // 2 — Address (billing always = shipping)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const addrRes = await setAddressMutation.mutateAsync({
         shipping_address: shippingAddress,
         same_as_billing: "on",
-      } as any)
+      })
       if (!addrRes?.success) throw new Error(addrRes?.error || "Could not set address")
 
       // 3 — Shipping method
@@ -222,6 +221,12 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
+      <h1
+        className="font-bebas leading-none"
+        style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "0.02em" }}
+      >
+        Checkout
+      </h1>
 
       {/* ── Contact ─────────────────────────────────────────────────────── */}
       <section>

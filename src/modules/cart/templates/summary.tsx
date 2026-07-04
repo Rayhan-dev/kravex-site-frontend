@@ -5,7 +5,6 @@ import { HttpTypes } from "@medusajs/types"
 import { LocalizedButtonLink, LocalizedLink } from "@/components/LocalizedLink"
 import CartTotals from "@modules/cart/components/cart-totals"
 import DiscountCode from "@modules/cart/components/discount-code"
-import { getCheckoutStep } from "@modules/cart/utils/getCheckoutStep"
 import { Icon } from "@/components/Icon"
 import { useCustomer } from "hooks/customer"
 import { withReactQueryProvider } from "@lib/util/react-query"
@@ -15,8 +14,6 @@ type SummaryProps = {
 }
 
 const Summary = ({ cart }: SummaryProps) => {
-  const step = getCheckoutStep(cart)
-
   const { data: customer, isPending } = useCustomer()
 
   return (
@@ -24,24 +21,25 @@ const Summary = ({ cart }: SummaryProps) => {
       <CartTotals cart={cart} className="lg:pt-8" />
       <DiscountCode cart={cart} />
       <LocalizedButtonLink
-        href={"/checkout?step=" + step}
+        href="/checkout"
         isFullWidth
         className="mt-6"
       >
         Proceed to checkout
       </LocalizedButtonLink>
       {!customer && !isPending && (
-        <div className="bg-grayscale-50 mt-8 rounded-xs p-4 flex items-center text-grayscale-500 gap-4">
-          <Icon name="info" />
+        <div className="bg-black/5 border border-black/10 mt-6 px-4 py-3.5 flex items-center text-black/50 gap-3 text-sm">
+          <Icon name="info" className="w-4 h-4 shrink-0 opacity-50" />
           <p>
-            Already have an account? No worries, just{" "}
+            Already have an account?{" "}
             <LocalizedLink
               href="/auth/login"
               variant="underline"
               className="text-black !p-0"
             >
-              log in.
-            </LocalizedLink>
+              Sign in
+            </LocalizedLink>{" "}
+            to see your orders.
           </p>
         </div>
       )}

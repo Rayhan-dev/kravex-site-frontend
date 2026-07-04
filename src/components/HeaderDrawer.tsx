@@ -46,9 +46,7 @@ export const HeaderDrawer: React.FC<{
           <div className="flex flex-col h-full text-black">
             {/* Header: brand + close */}
             <div className="flex items-center justify-between px-8 h-18 border-b border-black/10 shrink-0">
-              <span
-                className="text-xs tracking-[0.25em] uppercase"
-              >
+              <span className="font-bebas text-[1.75rem] tracking-[0.05em] leading-none">
                 Kravex
               </span>
               <button
@@ -61,8 +59,13 @@ export const HeaderDrawer: React.FC<{
             </div>
 
             {/* Search */}
-            <div className="px-8 py-4 border-b border-black/10 shrink-0">
-              <SearchField countryOptions={countryOptions} isInputAlwaysShown />
+            <div className="px-8 py-3.5 border-b border-black/10 shrink-0">
+              <SearchField
+                countryOptions={countryOptions}
+                isInputAlwaysShown
+                className="w-full"
+                inputContainerClassName="flex-1 max-w-full w-full"
+              />
             </div>
 
             {/* Nav links */}
@@ -70,17 +73,17 @@ export const HeaderDrawer: React.FC<{
               <LocalizedLink
                 href="/store"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-base hover:opacity-100 py-4"
+                className="text-[11px] tracking-[0.2em] uppercase font-medium hover:opacity-100 py-4"
               >
                 Shop All
               </LocalizedLink>
               {productTypes.map((type) => (
                 <React.Fragment key={type.id}>
-                  <div className="w-6 h-px bg-black/20" />
+                  <div className="w-6 h-px bg-black/15" />
                   <LocalizedLink
                     href={`/store?type=${encodeURIComponent(type.value)}`}
                     onClick={() => setIsMenuOpen(false)}
-                    className="text-base hover:opacity-100 py-4"
+                    className="text-[11px] tracking-[0.2em] uppercase font-medium hover:opacity-100 py-4"
                   >
                     {type.value}
                   </LocalizedLink>
