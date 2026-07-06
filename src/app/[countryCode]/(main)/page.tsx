@@ -7,6 +7,7 @@ import { Layout, LayoutColumn } from "@/components/Layout"
 import { LocalizedLink } from "@/components/LocalizedLink"
 import { CollectionsSection } from "@/components/CollectionsSection"
 import { RecentlyAddedProducts } from "@/components/RecentlyAddedProducts"
+import { Reveal } from "@/components/Reveal"
 
 export const metadata: Metadata = {
   title: "Kravex | Anime & Game Katanas in Bangladesh",
@@ -124,33 +125,38 @@ const ProductTypesSection: React.FC = async () => {
   ])
   if (!productTypes) return null
   return (
-    <Layout className="mb-26 md:mb-36 max-md:gap-x-2">
+    <Layout className="max-md:gap-x-2">
       <LayoutColumn>
-        <h3 className="font-bebas text-[2rem] md:text-[3rem] tracking-[0.02em] leading-none mb-8 md:mb-15">Our Products</h3>
+        <h3 className="text-md md:text-2xl mb-8 md:mb-15">Our Products</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-10 md:gap-y-12">
+          {productTypes.productTypes.map((productType, index) => (
+            <Reveal key={productType.id} delay={Math.min(index % 3, 2) * 0.08}>
+              <LocalizedLink
+                href={`/store?type=${productType.value}`}
+                className="group block"
+              >
+                {typeof productType.metadata?.image === "object" &&
+                productType.metadata.image &&
+                "url" in productType.metadata.image &&
+                typeof productType.metadata.image.url === "string" ? (
+                  <div className="kx-zoom relative aspect-[4/3] mb-2 md:mb-4 bg-grayscale-100">
+                    <Image
+                      src={productType.metadata.image.url}
+                      alt={productType.value}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 30vw"
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-[4/3] mb-2 md:mb-4 bg-grayscale-100" />
+                )}
+                <p className="md:text-lg">{productType.value}</p>
+              </LocalizedLink>
+            </Reveal>
+          ))}
+        </div>
       </LayoutColumn>
-      {productTypes.productTypes.map((productType, index) => (
-        <LayoutColumn
-          key={productType.id}
-          start={{ base: 1, md: index % 2 === 0 ? 1 : 7 }}
-          end={{ base: 13, md: index % 2 === 0 ? 7 : 13 }}
-        >
-          <LocalizedLink href={`/store?type=${productType.value}`}>
-            {typeof productType.metadata?.image === "object" &&
-              productType.metadata.image &&
-              "url" in productType.metadata.image &&
-              typeof productType.metadata.image.url === "string" && (
-                <Image
-                  src={productType.metadata.image.url}
-                  width={1200}
-                  height={900}
-                  alt={productType.value}
-                  className="mb-2 md:mb-8"
-                />
-              )}
-            <p className="text-xs md:text-md">{productType.value}</p>
-          </LocalizedLink>
-        </LayoutColumn>
-      ))}
     </Layout>
   )
 }
@@ -323,7 +329,9 @@ export default async function Home({
       {/* BELOW HERO */}
       <div className="pt-8 pb-26 md:pt-26 md:pb-36">
         <RecentlyAddedSection countryCode={countryCode} />
-        <CollectionsSection className="mb-22 md:mb-36" />
+        <Reveal>
+          <CollectionsSection className="mb-22 md:mb-36" />
+        </Reveal>
         <ProductTypesSection />
       </div>
     </>

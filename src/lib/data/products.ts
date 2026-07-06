@@ -112,8 +112,10 @@ export const getProductsList = async function ({
           fields: "*variants.calculated_price",
           ...queryParams,
         } satisfies HttpTypes.StoreProductListParams,
-        next: { tags: ["products"] },
-        cache: "force-cache",
+        // Time-based revalidation so newly added/removed products appear.
+        // (The "products" tag is only invalidated on cart actions, not on
+        // admin product changes, so force-cache would serve a stale list.)
+        next: { tags: ["products"], revalidate: 30 },
       }
     )
     .then(({ products, count }) => {

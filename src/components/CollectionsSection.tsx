@@ -46,7 +46,7 @@ export const CollectionsSection: React.FC<{ className?: string }> = async ({
               collection.metadata.image &&
               "url" in collection.metadata.image &&
               typeof collection.metadata.image.url === "string" && (
-                <div className="relative mb-4 md:mb-10 w-full aspect-[3/4]">
+                <div className="kx-zoom relative mb-4 md:mb-10 w-full aspect-[3/4]">
                   <Image
                     src={collection.metadata.image.url}
                     alt={collection.title}

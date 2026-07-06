@@ -1,5 +1,5 @@
 import * as React from "react"
-import { twMerge } from "tailwind-merge"
+import { twJoin, twMerge } from "tailwind-merge"
 import * as ReactAria from "react-aria-components"
 import { UiModal, UiModalOverlay, UiModalOwnProps } from "@/components/ui/Modal"
 import { UiDialog } from "@/components/Dialog"
@@ -19,14 +19,29 @@ export const Drawer: React.FC<DrawerProps> = ({
   children,
   ...rest
 }) => {
+  const side = animateFrom === "left" ? "left" : "right"
+
   return (
-    <UiModalOverlay {...rest}>
+    <UiModalOverlay
+      {...rest}
+      // Side drawers stretch full height and pin to an edge — override the
+      // centered-modal defaults (items-center / justify-center / padding).
+      className={twJoin(
+        "p-0 items-stretch",
+        side === "left" ? "justify-start" : "justify-end"
+      )}
+    >
       <UiModal
         animateFrom={animateFrom}
+        // `static` cancels the absolute positioning added for left/right so the
+        // panel is a normal flex child that fills the overlay's full height.
         className={twMerge(
-          "flex justify-self-center overflow-y-scroll max-h-screen h-screen max-w-75 rounded-none",
+          "static flex flex-col h-full max-h-full w-full max-w-75 overflow-y-auto rounded-none",
           colorScheme === "light"
-            ? "bg-cream text-black border-l border-black"
+            ? twJoin(
+                "bg-cream text-black",
+                side === "left" ? "border-r border-black" : "border-l border-black"
+              )
             : "bg-black text-white",
           className
         )}

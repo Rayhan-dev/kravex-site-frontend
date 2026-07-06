@@ -36,7 +36,7 @@ export const CollectionsSlider: React.FC<{
               c.metadata.image &&
               "url" in c.metadata.image &&
               typeof c.metadata.image.url === "string" && (
-                <div className="relative mb-4 md:mb-6 w-full aspect-[3/4]">
+                <div className="kx-zoom relative mb-4 md:mb-6 w-full aspect-[3/4]">
                   <Image src={c.metadata.image.url} alt={c.title} fill />
                 </div>
               )}

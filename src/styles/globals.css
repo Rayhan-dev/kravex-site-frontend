@@ -45,6 +45,50 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar::-webkit-scrollbar-track { background-color: transparent; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Snappy scroll-reveal: hidden until IntersectionObserver adds .is-visible.
+     Duration/easing tuned to feel quick but not abrupt (~0.5s ease-out). */
+  .kx-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .kx-reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  /* Optional stagger: set --kx-delay inline on child reveals */
+  .kx-reveal { transition-delay: var(--kx-delay, 0s); }
+
+  /* Image hover zoom — pair with an overflow-hidden wrapper. */
+  .kx-zoom {
+    overflow: hidden;
+  }
+  .kx-zoom img {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .kx-zoom:hover img {
+    transform: scale(1.06);
+  }
+
+  /* Respect users who prefer no motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .kx-reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .kx-zoom img {
+      transition: none !important;
+    }
+    .kx-zoom:hover img {
+      transform: none !important;
+    }
+  }
 }
 
 @layer components {

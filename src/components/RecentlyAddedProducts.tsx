@@ -3,6 +3,7 @@
 import { HttpTypes } from "@medusajs/types"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import ProductPreview from "@modules/products/components/product-preview"
+import { Reveal } from "@/components/Reveal"
 import { withReactQueryProvider } from "@lib/util/react-query"
 
 export const RecentlyAddedProducts = withReactQueryProvider<{
@@ -23,10 +24,15 @@ export const RecentlyAddedProducts = withReactQueryProvider<{
           <h3 className="text-md md:text-2xl mb-8 md:mb-15">Recently Added</h3>
         </LayoutColumn>
       </Layout>
-      <Layout className="gap-y-10 md:gap-y-16">
-        {products.map((product) => (
-          <LayoutColumn key={product.id} className="md:!col-span-4 !col-span-6">
-            <ProductPreview product={product} />
+      <Layout className="gap-y-12 md:gap-y-16">
+        {products.map((product, index) => (
+          <LayoutColumn
+            key={product.id}
+            className="md:!col-span-4 !col-span-12"
+          >
+            <Reveal delay={Math.min(index % 3, 2) * 0.08}>
+              <ProductPreview product={product} />
+            </Reveal>
           </LayoutColumn>
         ))}
       </Layout>
