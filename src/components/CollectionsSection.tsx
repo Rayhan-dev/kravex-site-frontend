@@ -35,6 +35,7 @@ export const CollectionsSection: React.FC<{ className?: string }> = async ({
         </>
       }
       className={className}
+      autoplay
     >
       {collections.collections.map((collection) => (
         <div

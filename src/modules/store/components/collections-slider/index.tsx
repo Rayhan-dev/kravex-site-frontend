@@ -25,6 +25,7 @@ export const CollectionsSlider: React.FC<{
     <Carousel
       heading={<h3 className="text-md md:text-2xl">{heading}</h3>}
       className={twMerge("mb-26 md:mb-36", className)}
+      autoplay
     >
       {collections.collections.map((c) => (
         <div

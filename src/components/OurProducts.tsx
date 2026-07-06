@@ -1,0 +1,56 @@
+"use client"
+
+import { HttpTypes } from "@medusajs/types"
+import { Layout, LayoutColumn } from "@/components/Layout"
+import { Carousel } from "@/components/Carousel"
+import ProductPreview from "@modules/products/components/product-preview"
+import { withReactQueryProvider } from "@lib/util/react-query"
+
+export type ProductTypeGroup = {
+  id: string
+  value: string
+  products: HttpTypes.StoreProduct[]
+}
+
+export const OurProducts = withReactQueryProvider<{
+  groups: ProductTypeGroup[]
+  className?: string
+}>(({ groups, className }) => {
+  if (!groups.length) {
+    return null
+  }
+
+  return (
+    <div className={className}>
+      <Layout>
+        <LayoutColumn>
+          <h3 className="text-md md:text-2xl mb-8 md:mb-15">Our Products</h3>
+        </LayoutColumn>
+      </Layout>
+
+      <div className="flex flex-col gap-14 md:gap-24">
+        {groups.map((group) => (
+          <Carousel
+            key={group.id}
+            autoplay
+            heading={
+              <div className="w-full">
+                <h4 className="text-base md:text-lg">{group.value}</h4>
+                <div className="mt-3 h-px w-full bg-black" />
+              </div>
+            }
+          >
+            {group.products.map((product) => (
+              <div
+                key={product.id}
+                className="w-[70%] sm:w-[45%] lg:w-1/4 max-w-80 flex-shrink-0"
+              >
+                <ProductPreview product={product} />
+              </div>
+            ))}
+          </Carousel>
+        ))}
+      </div>
+    </div>
+  )
+})

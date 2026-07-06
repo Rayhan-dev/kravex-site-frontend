@@ -14,7 +14,7 @@ const CartTemplate = () => {
     return <SkeletonCartPage />
   }
   return (
-    <Layout className="py-26 md:pb-36 md:pt-39">
+    <Layout className="pt-28 pb-16 md:pb-36 md:pt-39">
       {cart?.items?.length ? (
         <>
           <LayoutColumn

@@ -13,8 +13,8 @@ const SkeletonRelatedProducts = () => {
         </LayoutColumn>
       </Layout>
       <Layout className="gap-y-10 md:gap-y-16">
-        {repeat(3).map((index) => (
-          <LayoutColumn className="!col-span-6 md:!col-span-4" key={index}>
+        {repeat(4).map((index) => (
+          <LayoutColumn className="!col-span-6 md:!col-span-3" key={index}>
             <SkeletonProductPreview />
           </LayoutColumn>
         ))}

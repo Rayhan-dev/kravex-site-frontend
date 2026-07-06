@@ -87,6 +87,9 @@ export default function ProductPreview({
   const secondImage =
     images.length > 1 ? (images[1].url ?? undefined) : undefined
 
+  // First word of the product type, shown as a highlighted badge on the card.
+  const typeLabel = product.type?.value?.trim().split(/\s+/)[0]
+
   const hasOneVariant = (product.variants?.length ?? 0) === 1
 
   const handleAddToCart = async (e: React.MouseEvent) => {
@@ -185,36 +188,39 @@ export default function ProductPreview({
 
         {/* Product info */}
         <LocalizedLink href={`/products/${product.handle}`} className="block">
-          <div className="flex justify-between max-md:flex-col">
-            <div>
-              <p className="mb-1 font-medium text-sm md:text-base leading-snug">
-                {product.title}
-              </p>
-              {product.collection && (
-                <p className="text-black/40 text-[11px] max-md:hidden tracking-[0.1em] uppercase">
-                  {product.collection.title}
-                </p>
-              )}
-            </div>
-            {cheapestPrice ? (
-              hasReducedPrice ? (
-                <div>
+          <div className="flex items-start justify-between gap-2 mb-1">
+            <p className="font-medium text-sm md:text-base leading-snug">
+              {product.title}
+            </p>
+            {typeLabel && (
+              <span className="shrink-0 mt-0.5 border border-black text-black text-[10px] md:text-xs font-semibold uppercase tracking-[0.15em] px-2 py-0.5">
+                {typeLabel}
+              </span>
+            )}
+          </div>
+          {product.collection && (
+            <p className="text-black/40 text-[11px] max-md:hidden tracking-[0.1em] uppercase">
+              {product.collection.title}
+            </p>
+          )}
+          {cheapestPrice ? (
+            <div className="mt-2 flex items-baseline gap-2">
+              {hasReducedPrice ? (
+                <>
                   <p className="font-semibold max-md:text-xs text-red-primary">
                     {cheapestPrice.calculated_price}
                   </p>
                   <p className="max-md:text-xs text-grayscale-500 line-through">
                     {cheapestPrice.original_price}
                   </p>
-                </div>
+                </>
               ) : (
-                <div>
-                  <p className="font-semibold max-md:text-xs">
-                    {cheapestPrice.calculated_price}
-                  </p>
-                </div>
-              )
-            ) : null}
-          </div>
+                <p className="font-semibold max-md:text-xs">
+                  {cheapestPrice.calculated_price}
+                </p>
+              )}
+            </div>
+          ) : null}
         </LocalizedLink>
       </div>
 

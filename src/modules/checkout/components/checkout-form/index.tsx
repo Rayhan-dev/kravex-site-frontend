@@ -44,7 +44,7 @@ type FormValues = z.infer<typeof formSchema>
 
 // ── Input class ──────────────────────────────────────────────────────────────
 const inputCls =
-  "block w-full h-12 rounded-none outline-none px-0 border-0 border-b border-black/20 hover:border-black/60 focus:border-black bg-transparent transition-colors placeholder:text-black/25 text-black"
+  "block w-full h-12 rounded-none outline-none px-0 border-0 border-b border-black/20 hover:border-black/60 focus:border-black bg-transparent transition-colors placeholder:text-black/40 text-black"
 
 // ── Field ────────────────────────────────────────────────────────────────────
 const Field: React.FC<{
@@ -54,7 +54,7 @@ const Field: React.FC<{
   className?: string
 }> = ({ label, error, children, className }) => (
   <div className={twMerge("flex flex-col gap-1.5", className)}>
-    <span className="text-[10px] tracking-[0.25em] uppercase text-black/40">{label}</span>
+    <span className="text-[10px] tracking-[0.25em] uppercase text-black/60">{label}</span>
     {children}
     {error && <p className="text-xs text-red-900">{error}</p>}
   </div>
@@ -62,7 +62,7 @@ const Field: React.FC<{
 
 // ── Section label ─────────────────────────────────────────────────────────────
 const SectionLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-[10px] tracking-[0.3em] uppercase text-black/40 mb-5">{children}</p>
+  <p className="text-[10px] tracking-[0.3em] uppercase text-black/60 mb-5">{children}</p>
 )
 
 // ── Radio row ────────────────────────────────────────────────────────────────
@@ -288,7 +288,7 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
               <div
                 className={twMerge(
                   inputCls,
-                  "flex items-center text-black/40 select-none cursor-default"
+                  "flex items-center text-black/60 select-none cursor-default"
                 )}
               >
                 Bangladesh

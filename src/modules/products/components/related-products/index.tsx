@@ -21,7 +21,7 @@ export default async function RelatedProducts({
 
   // edit this function to define your related products logic
   const queryParams: HttpTypes.StoreProductListParams = {
-    limit: 3,
+    limit: 5,
   }
   if (region?.id) {
     queryParams.region_id = region.id
@@ -38,9 +38,9 @@ export default async function RelatedProducts({
     queryParams,
     countryCode,
   }).then(({ response }) => {
-    return response.products.filter(
-      (responseProduct) => responseProduct.id !== product.id
-    )
+    return response.products
+      .filter((responseProduct) => responseProduct.id !== product.id)
+      .slice(0, 4)
   })
 
   if (!products.length) {
@@ -58,7 +58,7 @@ export default async function RelatedProducts({
       </Layout>
       <Layout className="gap-y-10 md:gap-y-16">
         {products.map((product) => (
-          <LayoutColumn key={product.id} className="!col-span-6 md:!col-span-4">
+          <LayoutColumn key={product.id} className="!col-span-6 md:!col-span-3">
             <Product product={product} />
           </LayoutColumn>
         ))}

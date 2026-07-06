@@ -1,11 +1,10 @@
 import { Metadata } from "next"
-import Image from "next/image"
 import { getRegion } from "@lib/data/regions"
 import { getProductTypesList } from "@lib/data/product-types"
 import { getProductsList } from "@lib/data/products"
-import { Layout, LayoutColumn } from "@/components/Layout"
 import { LocalizedLink } from "@/components/LocalizedLink"
 import { CollectionsSection } from "@/components/CollectionsSection"
+import { OurProducts } from "@/components/OurProducts"
 import { RecentlyAddedProducts } from "@/components/RecentlyAddedProducts"
 import { Reveal } from "@/components/Reveal"
 
@@ -113,52 +112,43 @@ const RecentlyAddedSection: React.FC<{ countryCode: string }> = async ({
   }
 
   return (
-    <RecentlyAddedProducts products={products} className="mb-22 md:mb-36" />
+    <RecentlyAddedProducts
+      products={products}
+      className="mt-22 md:mt-36 mb-22 md:mb-36"
+    />
   )
 }
 
-const ProductTypesSection: React.FC = async () => {
-  const productTypes = await getProductTypesList(0, 20, [
-    "id",
-    "value",
-    "metadata",
-  ])
+const ProductTypesSection: React.FC<{ countryCode: string }> = async ({
+  countryCode,
+}) => {
+  const productTypes = await getProductTypesList(0, 20, ["id", "value"])
   if (!productTypes) return null
-  return (
-    <Layout className="max-md:gap-x-2">
-      <LayoutColumn>
-        <h3 className="text-md md:text-2xl mb-8 md:mb-15">Our Products</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-10 md:gap-y-12">
-          {productTypes.productTypes.map((productType, index) => (
-            <Reveal key={productType.id} delay={Math.min(index % 3, 2) * 0.08}>
-              <LocalizedLink
-                href={`/store?type=${productType.value}`}
-                className="group block"
-              >
-                {typeof productType.metadata?.image === "object" &&
-                productType.metadata.image &&
-                "url" in productType.metadata.image &&
-                typeof productType.metadata.image.url === "string" ? (
-                  <div className="kx-zoom relative aspect-[4/3] mb-2 md:mb-4 bg-grayscale-100">
-                    <Image
-                      src={productType.metadata.image.url}
-                      alt={productType.value}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 30vw"
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="aspect-[4/3] mb-2 md:mb-4 bg-grayscale-100" />
-                )}
-                <p className="md:text-lg">{productType.value}</p>
-              </LocalizedLink>
-            </Reveal>
-          ))}
-        </div>
-      </LayoutColumn>
-    </Layout>
+
+  const groups = await Promise.all(
+    productTypes.productTypes.map(async (productType) => {
+      const {
+        response: { products },
+      } = await getProductsList({
+        queryParams: { limit: 12, type_id: [productType.id] },
+        countryCode,
+      })
+
+      return {
+        id: productType.id,
+        value: productType.value,
+        products,
+      }
+    })
   )
+
+  const groupsWithProducts = groups.filter((group) => group.products.length > 0)
+
+  if (!groupsWithProducts.length) {
+    return null
+  }
+
+  return <OurProducts groups={groupsWithProducts} />
 }
 
 export default async function Home({
@@ -216,7 +206,10 @@ export default async function Home({
             <div className="w-20 h-px bg-black mb-6" />
             <h1
               className="font-bebas leading-none text-black mb-4"
-              style={{ fontSize: "clamp(5rem,14vw,10rem)", letterSpacing: "0.02em" }}
+              style={{
+                fontSize: "clamp(5rem,14vw,10rem)",
+                letterSpacing: "0.02em",
+              }}
             >
               KRAVEX
             </h1>
@@ -327,12 +320,12 @@ export default async function Home({
       </section>
 
       {/* BELOW HERO */}
-      <div className="pt-8 pb-26 md:pt-26 md:pb-36">
-        <RecentlyAddedSection countryCode={countryCode} />
+      <div className="pt-4 pb-14 md:pt-12 md:pb-20">
         <Reveal>
           <CollectionsSection className="mb-22 md:mb-36" />
         </Reveal>
-        <ProductTypesSection />
+        <ProductTypesSection countryCode={countryCode} />
+        <RecentlyAddedSection countryCode={countryCode} />
       </div>
     </>
   )

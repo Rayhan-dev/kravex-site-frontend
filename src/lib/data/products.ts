@@ -109,7 +109,7 @@ export const getProductsList = async function ({
           limit,
           offset,
           region_id: region.id,
-          fields: "*variants.calculated_price",
+          fields: "*variants.calculated_price,*type",
           ...queryParams,
         } satisfies HttpTypes.StoreProductListParams,
         // Time-based revalidation so newly added/removed products appear.

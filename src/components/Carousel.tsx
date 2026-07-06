@@ -12,12 +12,16 @@ export type CarouselProps = {
   heading?: React.ReactNode
   button?: React.ReactNode
   arrows?: boolean
+  autoplay?: boolean
+  autoplayDelay?: number
 } & React.ComponentPropsWithRef<"div">
 
 export const Carousel: React.FC<CarouselProps> = ({
   heading,
   button,
   arrows = true,
+  autoplay = false,
+  autoplayDelay = 1000,
   children,
   className,
 }) => {
@@ -25,6 +29,8 @@ export const Carousel: React.FC<CarouselProps> = ({
     containScroll: "trimSnaps",
     skipSnaps: true,
     active: true,
+    loop: autoplay,
+    duration: autoplay ? 18 : 25,
   })
   const [prevBtnDisabled, setPrevBtnDisabled] = React.useState(true)
   const [nextBtnDisabled, setNextBtnDisabled] = React.useState(true)
@@ -49,6 +55,56 @@ export const Carousel: React.FC<CarouselProps> = ({
     emblaApi.on("reInit", onSelect)
     emblaApi.on("select", onSelect)
   }, [emblaApi, onSelect])
+
+  React.useEffect(() => {
+    if (!emblaApi || !autoplay) return
+
+    let intervalId: ReturnType<typeof setInterval> | null = null
+    let paused = false
+
+    const tick = () => {
+      if (paused || !emblaApi) return
+      if (emblaApi.canScrollNext()) {
+        emblaApi.scrollNext()
+      } else {
+        emblaApi.scrollTo(0)
+      }
+    }
+
+    const start = () => {
+      stop()
+      intervalId = setInterval(tick, autoplayDelay)
+    }
+    const stop = () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+        intervalId = null
+      }
+    }
+
+    const pause = () => {
+      paused = true
+    }
+    const resume = () => {
+      paused = false
+    }
+
+    const root = emblaApi.rootNode()
+    root.addEventListener("mouseenter", pause)
+    root.addEventListener("mouseleave", resume)
+    emblaApi.on("pointerDown", pause)
+    emblaApi.on("pointerUp", resume)
+
+    start()
+
+    return () => {
+      stop()
+      root.removeEventListener("mouseenter", pause)
+      root.removeEventListener("mouseleave", resume)
+      emblaApi.off("pointerDown", pause)
+      emblaApi.off("pointerUp", resume)
+    }
+  }, [emblaApi, autoplay, autoplayDelay])
 
   return (
     <div className={twMerge("overflow-hidden", className)}>
@@ -100,8 +156,10 @@ export const Carousel: React.FC<CarouselProps> = ({
               </div>
             )}
           </div>
-          <div ref={emblaRef}>
-            <div className="flex touch-pan-y gap-4 md:gap-10">{children}</div>
+          <div ref={emblaRef} className="overflow-hidden">
+            <div className="flex touch-pan-y [&>*]:mr-4 md:[&>*]:mr-10">
+              {children}
+            </div>
           </div>
         </LayoutColumn>
       </Layout>

@@ -49,7 +49,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
   return (
     <div
-      className="pt-18 md:pt-26 lg:pt-37 pb-26 md:pb-36"
+      className="pt-18 md:pt-26 lg:pt-37 pb-16 md:pb-36"
       data-testid="product-container"
     >
       <ImageGallery className="md:hidden" images={images} />

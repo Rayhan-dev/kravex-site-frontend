@@ -28,7 +28,7 @@ export const RecentlyAddedProducts = withReactQueryProvider<{
         {products.map((product, index) => (
           <LayoutColumn
             key={product.id}
-            className="md:!col-span-4 !col-span-12"
+            className="md:!col-span-3 !col-span-6"
           >
             <Reveal delay={Math.min(index % 3, 2) * 0.08}>
               <ProductPreview product={product} />
