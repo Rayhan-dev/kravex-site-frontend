@@ -36,8 +36,14 @@ export const CollectionsSlider: React.FC<{
               c.metadata.image &&
               "url" in c.metadata.image &&
               typeof c.metadata.image.url === "string" && (
-                <div className="kx-zoom relative mb-4 md:mb-6 w-full aspect-[3/4]">
-                  <Image src={c.metadata.image.url} alt={c.title} fill />
+                <div className="kx-zoom relative mb-4 md:mb-6 w-full aspect-square">
+                  <Image
+                    src={c.metadata.image.url}
+                    alt={c.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 70vw, (max-width: 1024px) 60vw, 288px"
+                  />
                 </div>
               )}
             <h3>{c.title}</h3>

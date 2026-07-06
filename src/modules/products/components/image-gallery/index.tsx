@@ -19,7 +19,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
       {filteredImages.map((image, index) => (
         <div
           key={image.id}
-          className="relative aspect-[3/4] w-full overflow-hidden"
+          className="relative aspect-square w-full overflow-hidden"
         >
           <Image
             key={image.id}

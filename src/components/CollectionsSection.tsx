@@ -38,7 +38,7 @@ export const CollectionsSection: React.FC<{ className?: string }> = async ({
     >
       {collections.collections.map((collection) => (
         <div
-          className="w-[70%] sm:w-[60%] lg:w-full max-w-124 flex-shrink-0"
+          className="w-[70%] sm:w-[60%] lg:w-full max-w-72 flex-shrink-0"
           key={collection.id}
         >
           <LocalizedLink href={`/collections/${collection.handle}`}>
@@ -46,11 +46,13 @@ export const CollectionsSection: React.FC<{ className?: string }> = async ({
               collection.metadata.image &&
               "url" in collection.metadata.image &&
               typeof collection.metadata.image.url === "string" && (
-                <div className="kx-zoom relative mb-4 md:mb-10 w-full aspect-[3/4]">
+                <div className="kx-zoom relative mb-4 md:mb-6 w-full aspect-square">
                   <Image
                     src={collection.metadata.image.url}
                     alt={collection.title}
                     fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 70vw, (max-width: 1024px) 60vw, 288px"
                   />
                 </div>
               )}
