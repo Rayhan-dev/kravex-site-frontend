@@ -3,7 +3,7 @@ import { getRegion } from "@lib/data/regions"
 import { getProductTypesList } from "@lib/data/product-types"
 import { getProductsList } from "@lib/data/products"
 import { LocalizedLink } from "@/components/LocalizedLink"
-import { CollectionsSection } from "@/components/CollectionsSection"
+import { CollectionsSlider } from "@modules/store/components/collections-slider"
 import { OurProducts } from "@/components/OurProducts"
 import { RecentlyAddedProducts } from "@/components/RecentlyAddedProducts"
 import { Reveal } from "@/components/Reveal"
@@ -322,7 +322,7 @@ export default async function Home({
       {/* BELOW HERO */}
       <div className="pt-4 pb-14 md:pt-12 md:pb-20">
         <Reveal>
-          <CollectionsSection className="mb-22 md:mb-36" />
+          <CollectionsSlider className="mb-22 md:mb-36" />
         </Reveal>
         <ProductTypesSection countryCode={countryCode} />
         <RecentlyAddedSection countryCode={countryCode} />

@@ -4,6 +4,7 @@ import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-g
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { CollectionsSlider } from "@modules/store/components/collections-slider"
+import { ScrollToShop } from "@modules/store/components/scroll-to-shop"
 
 import { getCollectionsList } from "@lib/data/collections"
 import { getProductTypesList } from "@lib/data/product-types"
@@ -31,8 +32,35 @@ const StoreTemplate = async ({
     getRegion(countryCode),
   ])
 
+  // Reflect the active filter in the banner — a selected type or collection
+  // takes over the hero, just like a dedicated collection page.
+  const selectedTypeValues = type?.length
+    ? types.productTypes
+        .filter((t) => type.includes(t.value))
+        .map((t) => t.value)
+    : []
+  const selectedCollectionTitles = collection?.length
+    ? collections.collections
+        .filter((c) => collection.includes(c.handle))
+        .map((c) => c.title)
+    : []
+
+  const bannerEyebrow = selectedTypeValues.length
+    ? "Category"
+    : selectedCollectionTitles.length
+      ? "Collection"
+      : "Kravex"
+  const bannerTitle = selectedTypeValues.length
+    ? selectedTypeValues.join(" · ")
+    : selectedCollectionTitles.length
+      ? selectedCollectionTitles.join(" · ")
+      : "All Blades"
+
   return (
     <>
+      <Suspense>
+        <ScrollToShop />
+      </Suspense>
       {/* Store hero */}
       <div className="relative overflow-hidden" style={{ background: "#0d0d0d" }}>
         {/* Diagonal texture */}
@@ -56,7 +84,7 @@ const StoreTemplate = async ({
             className="text-white/30 mb-3"
             style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase" }}
           >
-            Kravex
+            {bannerEyebrow}
           </p>
           <h1
             className="text-white font-bebas"
@@ -66,7 +94,7 @@ const StoreTemplate = async ({
               lineHeight: 1,
             }}
           >
-            All Blades
+            {bannerTitle}
           </h1>
           <p
             className="text-white/30 mt-3"
@@ -79,18 +107,19 @@ const StoreTemplate = async ({
 
       <div className="py-10 md:py-16 md:pb-36">
         <CollectionsSlider />
-        <RefinementList
-          collections={Object.fromEntries(
-            collections.collections.map((c) => [c.handle, c.title])
-          )}
-          collection={collection}
-          types={Object.fromEntries(
-            types.productTypes.map((t) => [t.value, t.value])
-          )}
-          type={type}
-          sortBy={sortBy}
-        />
-        <Suspense fallback={<SkeletonProductGrid />}>
+        <div id="shop" className="scroll-mt-24">
+          <RefinementList
+            collections={Object.fromEntries(
+              collections.collections.map((c) => [c.handle, c.title])
+            )}
+            collection={collection}
+            types={Object.fromEntries(
+              types.productTypes.map((t) => [t.value, t.value])
+            )}
+            type={type}
+            sortBy={sortBy}
+          />
+          <Suspense fallback={<SkeletonProductGrid />}>
           {region && (
             <PaginatedProducts
               sortBy={sortBy}
@@ -112,7 +141,8 @@ const StoreTemplate = async ({
               }
             />
           )}
-        </Suspense>
+          </Suspense>
+        </div>
       </div>
     </>
   )

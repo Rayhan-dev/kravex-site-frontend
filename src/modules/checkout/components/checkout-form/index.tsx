@@ -61,8 +61,16 @@ const Field: React.FC<{
 )
 
 // ── Section label ─────────────────────────────────────────────────────────────
-const SectionLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-[10px] tracking-[0.3em] uppercase text-black/60 mb-5">{children}</p>
+const SectionLabel: React.FC<{ step: number; children: React.ReactNode }> = ({
+  step,
+  children,
+}) => (
+  <div className="flex items-center gap-3 mb-5">
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-black text-cream text-xs font-semibold shrink-0">
+      {step}
+    </span>
+    <p className="text-sm font-semibold tracking-[0.02em]">{children}</p>
+  </div>
 )
 
 // ── Radio row ────────────────────────────────────────────────────────────────
@@ -129,12 +137,32 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
     },
   })
 
-  // Auto-select when there's only one shipping method
+  const selectedProvider = watch("paymentProviderId")
+  const selectedShipping = watch("shippingMethodId")
+
+  // Apply the chosen delivery method to the cart as soon as it's selected so
+  // the order summary (which reads the cart) reflects the shipping cost live.
+  const appliedShippingOptionId = cart?.shipping_methods?.[0]?.shipping_option_id
+  const isApplyingShipping = setShippingMutation.isPending
   useEffect(() => {
-    if (shippingMethods?.length === 1) {
-      setValue("shippingMethodId", shippingMethods[0].id, { shouldValidate: false })
+    if (!cart?.id || !selectedShipping) return
+    if (appliedShippingOptionId === selectedShipping) return
+    if (isApplyingShipping) return
+    setShippingMutation.mutate({ shippingMethodId: selectedShipping })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedShipping, cart?.id, appliedShippingOptionId, isApplyingShipping])
+
+  // Default-select the first shipping method as soon as the options load (and
+  // re-default if the current selection is no longer valid).
+  useEffect(() => {
+    if (!shippingMethods?.length) return
+    const stillValid = shippingMethods.some((m) => m.id === selectedShipping)
+    if (!selectedShipping || !stillValid) {
+      setValue("shippingMethodId", shippingMethods[0].id, {
+        shouldValidate: false,
+      })
     }
-  }, [shippingMethods, setValue])
+  }, [shippingMethods, selectedShipping, setValue])
 
   // Auto-select when there's only one payment method (e.g. Cash on Delivery)
   useEffect(() => {
@@ -142,9 +170,6 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
       setValue("paymentProviderId", paymentMethods[0].id, { shouldValidate: false })
     }
   }, [paymentMethods, setValue])
-
-  const selectedProvider = watch("paymentProviderId")
-  const selectedShipping = watch("shippingMethodId")
 
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true)
@@ -221,16 +246,22 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
-      <h1
-        className="font-bebas leading-none"
-        style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "0.02em" }}
-      >
-        Checkout
-      </h1>
+      <div>
+        <h1
+          className="font-bebas leading-none"
+          style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "0.02em" }}
+        >
+          Checkout
+        </h1>
+        <p className="text-sm text-black/50 mt-3">
+          Fill in the details below and place your order. Pay on delivery — it
+          only takes a minute.
+        </p>
+      </div>
 
       {/* ── Contact ─────────────────────────────────────────────────────── */}
       <section>
-        <SectionLabel>Contact</SectionLabel>
+        <SectionLabel step={1}>Your contact details</SectionLabel>
         <div className="flex flex-col gap-4">
           <Field label="Email" error={errors.email?.message}>
             <input
@@ -265,7 +296,7 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
 
       {/* ── Delivery ────────────────────────────────────────────────────── */}
       <section>
-        <SectionLabel>Delivery</SectionLabel>
+        <SectionLabel step={2}>Where should we deliver?</SectionLabel>
         <div className="flex flex-col gap-4">
           <Field label="Address" error={errors.address_1?.message}>
             <input
@@ -301,7 +332,7 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
       {/* ── Shipping ────────────────────────────────────────────────────── */}
       {shippingMethods && shippingMethods.length > 0 && (
         <section>
-          <SectionLabel>Shipping</SectionLabel>
+          <SectionLabel step={3}>Delivery method</SectionLabel>
           {shippingMethods.length === 1 ? (
             // Single option — show as read-only confirmation
             <div className="flex items-center justify-between px-4 py-3.5 border border-black/15">
@@ -341,7 +372,7 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
       {/* ── Payment ─────────────────────────────────────────────────────── */}
       {paymentMethods && paymentMethods.length > 0 && (
         <section>
-          <SectionLabel>Payment</SectionLabel>
+          <SectionLabel step={4}>How would you like to pay?</SectionLabel>
           {singlePaymentMethod ? (
             // Single option (COD) — show as confirmed, no selector needed
             <div className="flex items-center gap-3 px-4 py-3.5 border border-black/15">
@@ -395,14 +426,19 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
       )}
 
       {/* ── Submit ──────────────────────────────────────────────────────── */}
-      <Button
-        type="submit"
-        className="w-full"
-        isLoading={isSubmitting}
-        isDisabled={isSubmitting}
-      >
-        Place order
-      </Button>
+      <div>
+        <Button
+          type="submit"
+          className="w-full"
+          isLoading={isSubmitting}
+          isDisabled={isSubmitting}
+        >
+          Place order
+        </Button>
+        <p className="text-xs text-black/50 mt-3 text-center">
+          No payment now — you pay when your order arrives.
+        </p>
+      </div>
     </form>
   )
 }

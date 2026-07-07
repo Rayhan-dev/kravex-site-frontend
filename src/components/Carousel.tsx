@@ -21,7 +21,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   button,
   arrows = true,
   autoplay = false,
-  autoplayDelay = 1000,
+  autoplayDelay = 2000,
   children,
   className,
 }) => {
@@ -60,7 +60,12 @@ export const Carousel: React.FC<CarouselProps> = ({
     if (!emblaApi || !autoplay) return
 
     let intervalId: ReturnType<typeof setInterval> | null = null
+    let resumeId: ReturnType<typeof setTimeout> | null = null
     let paused = false
+
+    // After a manual interaction, keep this carousel paused a little longer so
+    // the user's own scroll isn't immediately fought by the autoplay tick.
+    const RESUME_DELAY = Math.max(autoplayDelay, 3000)
 
     const tick = () => {
       if (paused || !emblaApi) return
@@ -82,27 +87,41 @@ export const Carousel: React.FC<CarouselProps> = ({
       }
     }
 
+    const clearResume = () => {
+      if (resumeId) {
+        clearTimeout(resumeId)
+        resumeId = null
+      }
+    }
+
+    // Pause immediately on interaction (hover / touch / drag).
     const pause = () => {
+      clearResume()
       paused = true
     }
-    const resume = () => {
-      paused = false
+    // Resume after a cooldown so a manual scroll interrupts only briefly.
+    const resumeSoon = () => {
+      clearResume()
+      resumeId = setTimeout(() => {
+        paused = false
+      }, RESUME_DELAY)
     }
 
     const root = emblaApi.rootNode()
     root.addEventListener("mouseenter", pause)
-    root.addEventListener("mouseleave", resume)
+    root.addEventListener("mouseleave", resumeSoon)
     emblaApi.on("pointerDown", pause)
-    emblaApi.on("pointerUp", resume)
+    emblaApi.on("pointerUp", resumeSoon)
 
     start()
 
     return () => {
       stop()
+      clearResume()
       root.removeEventListener("mouseenter", pause)
-      root.removeEventListener("mouseleave", resume)
+      root.removeEventListener("mouseleave", resumeSoon)
       emblaApi.off("pointerDown", pause)
-      emblaApi.off("pointerUp", resume)
+      emblaApi.off("pointerUp", resumeSoon)
     }
   }, [emblaApi, autoplay, autoplayDelay])
 

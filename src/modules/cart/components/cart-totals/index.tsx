@@ -51,7 +51,14 @@ const CartTotals: React.FC<CartTotalsProps> = ({
           </div>
         )}
         <div className="flex justify-between text-sm">
-          <p className="text-black/50">Shipping</p>
+          <p className="text-black/50">
+            Shipping
+            {isPartOfCartDrawer && (
+              <span className="block text-[11px] text-black/40">
+                May change at checkout
+              </span>
+            )}
+          </p>
           <p data-testid="cart-shipping" data-value={shipping_total || 0}>
             {convertToLocale({ amount: shipping_total ?? 0, currency_code })}
           </p>

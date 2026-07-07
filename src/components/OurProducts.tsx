@@ -28,14 +28,15 @@ export const OurProducts = withReactQueryProvider<{
         </LayoutColumn>
       </Layout>
 
-      <div className="flex flex-col gap-14 md:gap-24">
-        {groups.map((group) => (
+      <div className="flex flex-col">
+        {[...groups].reverse().map((group) => (
           <Carousel
             key={group.id}
             autoplay
+            className="mb-16 md:mb-28 last:mb-0"
             heading={
               <div className="w-full">
-                <h4 className="text-base md:text-lg">{group.value}</h4>
+                <h4 className="text-lg md:text-2xl">{group.value}</h4>
                 <div className="mt-3 h-px w-full bg-black" />
               </div>
             }

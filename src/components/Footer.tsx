@@ -51,13 +51,10 @@ export const Footer: React.FC = () => {
                 <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-cream/40">
                   Connect
                 </p>
-                <a href="https://www.instagram.com/kravex" target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
+                <a href="https://www.instagram.com/kravex_collectibles/" target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
                   Instagram
                 </a>
-                <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
-                  TikTok
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
+                <a href="https://www.facebook.com/profile.php?id=61591535542705" target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
                   Facebook
                 </a>
               </div>
