@@ -44,7 +44,7 @@ function DragonPanel() {
       <div className="relative z-10">
         <div className="w-20 h-px bg-black mb-4" />
         <p className="font-bebas text-[5rem] leading-none text-black mb-3" style={{ letterSpacing: "0.02em" }}>KRAVEX</p>
-        <p className="text-[11px] text-black/45 tracking-[0.2em] uppercase">Anime &bull; Katanas &bull; Collectibles</p>
+        <p className="text-xs text-black/45 tracking-[0.2em] uppercase">Anime &bull; Katanas &bull; Collectibles</p>
       </div>
     </div>
   )

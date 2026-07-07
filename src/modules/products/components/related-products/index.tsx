@@ -58,7 +58,7 @@ export default async function RelatedProducts({
       </Layout>
       <Layout className="gap-y-10 md:gap-y-16">
         {products.map((product) => (
-          <LayoutColumn key={product.id} className="!col-span-6 md:!col-span-3">
+          <LayoutColumn key={product.id} className="!col-span-12 md:!col-span-3">
             <Product product={product} />
           </LayoutColumn>
         ))}

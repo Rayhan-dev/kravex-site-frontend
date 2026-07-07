@@ -68,8 +68,8 @@ const CARDS = [
   {
     id: "op",
     series: "One Piece",
-    name: "Wado Ichimonji",
-    desc: "Zoro's three-sword style",
+    name: "Meito Series",
+    desc: "Roronoa Zoro, Trafalgar D. law",
     rotate: "3deg",
     tx: "6px",
     ty: "6px",
@@ -79,7 +79,7 @@ const CARDS = [
     id: "bl",
     series: "Bleach",
     name: "Zanpakuto Series",
-    desc: "Ichigo, Byakuya & Rukia",
+    desc: "Ichigo,Rukia & More ",
     rotate: "4deg",
     tx: "16px",
     ty: "-4px",
@@ -88,8 +88,8 @@ const CARDS = [
   {
     id: "vl",
     series: "Valorant",
-    name: "Agent Knives",
-    desc: "Elderflame & fan favourites",
+    name: "Melee & knife",
+    desc: "Karambit, Butterfly, Sword & More",
     rotate: "-2deg",
     tx: "-10px",
     ty: "10px",
@@ -217,14 +217,14 @@ export default async function Home({
               Anime Katanas and Swords.
             </p>
             <p
-              className="text-[11px] mb-10 tracking-[0.25em] uppercase"
+              className="text-xs mb-10 tracking-[0.25em] uppercase"
               style={{ color: "rgba(0,0,0,0.40)" }}
             >
               Katanas&nbsp;&bull;&nbsp;Character&nbsp;Knives&nbsp;&bull;&nbsp;Accessories
             </p>
             <LocalizedLink
               href="/store"
-              className="kx-btn inline-block bg-black px-8 py-4 text-[11px] font-semibold tracking-[0.2em] uppercase"
+              className="kx-btn inline-block bg-black px-8 py-4 text-xs font-semibold tracking-[0.2em] uppercase"
               style={{ color: "#ede8d0" }}
             >
               Shop Now
@@ -303,13 +303,13 @@ export default async function Home({
                       />
                     </svg>
                   </div>
-                  <p className="text-[10px] lg:text-[11px] font-semibold uppercase tracking-[0.2em] mb-1 text-black/40">
+                  <p className="text-2xs lg:text-xs font-semibold uppercase tracking-[0.2em] mb-1 text-black/40">
                     {card.series}
                   </p>
                   <p className="text-xs lg:text-sm font-semibold text-black leading-tight mb-1">
                     {card.name}
                   </p>
-                  <p className="text-[10px] lg:text-xs leading-snug text-black/35">
+                  <p className="text-2xs lg:text-xs leading-snug text-black/35">
                     {card.desc}
                   </p>
                 </LocalizedLink>

@@ -172,7 +172,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
       {/* Editorial full-bleed band */}
       <div className="w-full bg-[#0d0d0d] py-20 md:py-28 px-6 flex flex-col items-center text-center mb-0">
-        <p className="text-white/30 text-[10px] tracking-[0.3em] uppercase mb-4">Kravex</p>
+        <p className="text-white/30 text-2xs tracking-[0.3em] uppercase mb-4">Kravex</p>
         <h2
           className="font-bebas text-white leading-none mb-4"
           style={{ fontSize: "clamp(3rem, 10vw, 8rem)", letterSpacing: "0.02em" }}

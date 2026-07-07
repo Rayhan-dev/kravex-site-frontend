@@ -55,13 +55,13 @@ export const Header: React.FC = async () => {
                 <LocalizedLink href="/" className="font-bebas text-[1.75rem] tracking-[0.05em] leading-none">Kravex</LocalizedLink>
               </h1>
               <div className="flex items-center gap-6 max-md:hidden">
-                <LocalizedLink href="/store" className="text-[11px] tracking-[0.15em] uppercase font-medium">Shop All</LocalizedLink>
+                <LocalizedLink href="/store" className="text-xs tracking-[0.15em] uppercase font-medium">Shop All</LocalizedLink>
                 {navTypes.map((type) => (
                   <React.Fragment key={type.id}>
                     <span className="h-3 w-px bg-black/25 shrink-0" aria-hidden />
                     <LocalizedLink
                       href={`/store?type=${encodeURIComponent(type.value)}`}
-                      className="text-[11px] tracking-[0.15em] uppercase font-medium"
+                      className="text-xs tracking-[0.15em] uppercase font-medium"
                     >
                       {type.value}
                     </LocalizedLink>

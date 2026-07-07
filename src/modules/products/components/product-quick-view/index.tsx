@@ -140,7 +140,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
             <LocalizedLink
               href={`/products/${product.handle}`}
               onClick={onClose}
-              className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-black/50 hover:text-black transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-2xs tracking-[0.3em] uppercase text-black/50 hover:text-black transition-colors duration-200"
             >
               View full product page
               <svg

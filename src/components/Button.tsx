@@ -56,7 +56,7 @@ export const getButtonClassNames = ({
   const hasGap = (isLoading && loadingText) || iconName
   const sizeClasses =
     size === "sm"
-      ? "px-4 h-8 text-[11px] tracking-widest uppercase font-semibold"
+      ? "px-4 h-8 text-xs tracking-widest uppercase font-semibold"
       : size === "md"
         ? "px-6 h-12 text-xs tracking-widest uppercase font-semibold"
         : ""

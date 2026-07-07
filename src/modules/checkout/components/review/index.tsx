@@ -24,7 +24,7 @@ const Review = ({ cart }: { cart: StoreCart }) => {
     <>
       <div className="flex items-start justify-between mb-6 md:mb-8 border-t border-black/10 pt-8 mt-8">
         <div>
-          <p className="text-[10px] tracking-[0.3em] uppercase text-black/40 mb-1.5">05</p>
+          <p className="text-2xs tracking-[0.3em] uppercase text-black/40 mb-1.5">05</p>
           <p className={twJoin("transition-all duration-75", isOpen ? "font-medium" : "text-black/50")}>
             Review &amp; Place order
           </p>

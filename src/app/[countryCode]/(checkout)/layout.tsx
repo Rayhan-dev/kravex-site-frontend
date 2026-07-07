@@ -25,7 +25,7 @@ export default function CheckoutLayout({
             <LocalizedLink href="/" className="font-bebas text-[1.75rem] tracking-[0.05em] leading-none">
               Kravex
             </LocalizedLink>
-            <p className="text-[10px] tracking-[0.25em] uppercase text-black/50">Checkout</p>
+            <p className="text-2xs tracking-[0.25em] uppercase text-black/50">Checkout</p>
           </div>
         </LayoutColumn>
       </Layout>

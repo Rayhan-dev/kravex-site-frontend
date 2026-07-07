@@ -54,7 +54,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({
           <p className="text-black/50">
             Shipping
             {isPartOfCartDrawer && (
-              <span className="block text-[11px] text-black/40">
+              <span className="block text-xs text-black/40">
                 May change at checkout
               </span>
             )}

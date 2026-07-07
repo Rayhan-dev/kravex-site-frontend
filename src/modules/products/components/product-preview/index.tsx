@@ -168,7 +168,7 @@ export default function ProductPreview({
             onClick={handleAddToCart}
             disabled={isAddingToCart}
             aria-label={hasOneVariant ? "Add to cart" : "Select options"}
-            className="flex-1 h-9 flex items-center justify-center gap-2 border border-black text-[10px] font-semibold uppercase tracking-[0.15em] active:bg-black active:text-cream transition-colors disabled:opacity-50"
+            className="flex-1 h-9 flex items-center justify-center gap-2 border border-black text-2xs font-semibold uppercase tracking-[0.15em] active:bg-black active:text-cream transition-colors disabled:opacity-50"
           >
             {isAddingToCart ? (
               <SpinnerIcon className="w-3.5 h-3.5 animate-spin" />
@@ -189,17 +189,17 @@ export default function ProductPreview({
         {/* Product info */}
         <LocalizedLink href={`/products/${product.handle}`} className="block">
           <div className="flex items-start justify-between gap-2 mb-1">
-            <p className="font-medium text-sm md:text-base leading-snug">
+            <p className="font-medium text-base leading-snug">
               {product.title}
             </p>
             {typeLabel && (
-              <span className="shrink-0 mt-0.5 border border-black text-black text-[10px] md:text-xs font-semibold uppercase tracking-[0.15em] px-2 py-0.5">
+              <span className="shrink-0 mt-0.5 border border-black text-black text-2xs font-semibold uppercase tracking-[0.15em] px-2 py-0.5">
                 {typeLabel}
               </span>
             )}
           </div>
           {product.collection && (
-            <p className="text-black/40 text-[11px] max-md:hidden tracking-[0.1em] uppercase">
+            <p className="text-black/40 text-xs max-md:hidden tracking-[0.1em] uppercase">
               {product.collection.title}
             </p>
           )}
@@ -207,15 +207,15 @@ export default function ProductPreview({
             <div className="mt-2 flex items-baseline gap-2">
               {hasReducedPrice ? (
                 <>
-                  <p className="font-semibold text-sm md:text-base text-red-primary">
+                  <p className="font-semibold text-sm text-red-primary">
                     {cheapestPrice.calculated_price}
                   </p>
-                  <p className="text-xs md:text-sm text-grayscale-500 line-through">
+                  <p className="text-xs text-grayscale-500 line-through">
                     {cheapestPrice.original_price}
                   </p>
                 </>
               ) : (
-                <p className="font-semibold text-sm md:text-base">
+                <p className="font-semibold text-sm">
                   {cheapestPrice.calculated_price}
                 </p>
               )}

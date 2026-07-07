@@ -167,7 +167,7 @@ export const SearchField: React.FC<{
                   <p className="text-sm font-medium leading-tight truncate">
                     {item.title}
                   </p>
-                  <p className="text-black/40 text-[11px] mt-1 uppercase tracking-[0.1em] truncate">
+                  <p className="text-black/40 text-xs mt-1 uppercase tracking-[0.1em] truncate">
                     {item.variants[0]}
                   </p>
                 </div>

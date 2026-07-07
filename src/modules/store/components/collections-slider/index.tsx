@@ -47,7 +47,7 @@ export const CollectionsSlider: React.FC<{
                   />
                 </div>
               )}
-            <h3>{c.title}</h3>
+            <h3 className="text-md">{c.title}</h3>
           </LocalizedLink>
         </div>
       ))}

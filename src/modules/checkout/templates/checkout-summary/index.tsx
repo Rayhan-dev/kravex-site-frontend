@@ -39,7 +39,7 @@ const CheckoutSummary = ({ cart }: { cart: HttpTypes.StoreCart }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8 lg:mb-10 pb-6 border-b border-black/10">
-        <p className="text-[10px] tracking-[0.25em] uppercase text-black/50">
+        <p className="text-2xs tracking-[0.25em] uppercase text-black/50">
           {numOfItems} item{numOfItems > 1 ? "s" : ""}
         </p>
         <LocalizedButtonLink href="/cart" variant="link" className="text-xs">

@@ -18,7 +18,7 @@ export const RecentlyAddedProducts = withReactQueryProvider<{
     <div className={className}>
       <Layout>
         <LayoutColumn>
-          <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-black/40 mb-3">
+          <p className="text-xs font-bold tracking-[0.15em] uppercase text-black/40 mb-3">
             Fresh from the forge
           </p>
           <h3 className="text-md md:text-2xl mb-8 md:mb-15">Recently Added</h3>
@@ -28,7 +28,7 @@ export const RecentlyAddedProducts = withReactQueryProvider<{
         {products.map((product, index) => (
           <LayoutColumn
             key={product.id}
-            className="md:!col-span-3 !col-span-6"
+            className="md:!col-span-3 !col-span-12"
           >
             <Reveal delay={Math.min(index % 3, 2) * 0.08}>
               <ProductPreview product={product} />

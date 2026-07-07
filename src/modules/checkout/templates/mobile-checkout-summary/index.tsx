@@ -42,7 +42,7 @@ const MobileCheckoutSummary = ({ cart }: { cart: HttpTypes.StoreCart }) => {
         onClick={onClickHandler}
         data-open="no"
       >
-        <p className="text-[10px] tracking-[0.25em] uppercase text-black/50">Order summary</p>
+        <p className="text-2xs tracking-[0.25em] uppercase text-black/50">Order summary</p>
         <div className="flex items-center gap-3">
           <span className="text-sm">{convertToLocale({ amount: total ?? 0, currency_code })}</span>
           <Icon

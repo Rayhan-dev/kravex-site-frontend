@@ -34,37 +34,37 @@ export const Footer: React.FC = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-10 md:gap-24">
               <div className="flex flex-col gap-4">
-                <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-cream/40">
+                <p className="text-xs font-bold tracking-[0.15em] uppercase text-cream/40">
                   Navigation
                 </p>
-                <LocalizedLink href="/store" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
+                <LocalizedLink href="/store" className="text-xs tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
                   Shop All
                 </LocalizedLink>
-                <LocalizedLink href="/cart" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
+                <LocalizedLink href="/cart" className="text-xs tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
                   Cart
                 </LocalizedLink>
-                <LocalizedLink href="/account" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
+                <LocalizedLink href="/account" className="text-xs tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
                   Account
                 </LocalizedLink>
               </div>
               <div className="flex flex-col gap-4">
-                <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-cream/40">
+                <p className="text-xs font-bold tracking-[0.15em] uppercase text-cream/40">
                   Connect
                 </p>
-                <a href="https://www.instagram.com/kravex_collectibles/" target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
+                <a href="https://www.instagram.com/kravex_collectibles/" target="_blank" rel="noreferrer" className="text-xs tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
                   Instagram
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61591535542705" target="_blank" rel="noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
+                <a href="https://www.facebook.com/profile.php?id=61591535542705" target="_blank" rel="noreferrer" className="text-xs tracking-[0.15em] uppercase text-cream/80 hover:text-cream">
                   Facebook
                 </a>
               </div>
             </div>
           </div>
           <div className="py-6 border-t border-cream/15 flex max-sm:flex-col justify-between gap-2">
-            <p className="text-[11px] tracking-[0.1em] uppercase text-cream/50">
+            <p className="text-xs tracking-[0.1em] uppercase text-cream/50">
               &copy; {new Date().getFullYear()} Kravex. All rights reserved.
             </p>
-            <p className="text-[11px] tracking-[0.1em] uppercase text-cream/50">
+            <p className="text-xs tracking-[0.1em] uppercase text-cream/50">
               Beyond the blade
             </p>
           </div>

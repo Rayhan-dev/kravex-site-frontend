@@ -38,7 +38,7 @@ export const OurProducts = withReactQueryProvider<{
             heading={
               <div className="w-full">
                 <div className="flex items-center justify-between gap-4">
-                  <h4 className="text-2xl md:text-3xl">{group.value}</h4>
+                  <h4 className="text-md md:text-lg">{group.value}</h4>
                   <LocalizedButtonLink
                     href={`/store?type=${encodeURIComponent(group.value)}`}
                     variant="outline"

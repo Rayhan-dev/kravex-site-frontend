@@ -73,7 +73,7 @@ export const HeaderDrawer: React.FC<{
               <LocalizedLink
                 href="/store"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-[11px] tracking-[0.2em] uppercase font-medium hover:opacity-100 py-4"
+                className="text-xs tracking-[0.2em] uppercase font-medium hover:opacity-100 py-4"
               >
                 Shop All
               </LocalizedLink>
@@ -83,7 +83,7 @@ export const HeaderDrawer: React.FC<{
                   <LocalizedLink
                     href={`/store?type=${encodeURIComponent(type.value)}`}
                     onClick={() => setIsMenuOpen(false)}
-                    className="text-[11px] tracking-[0.2em] uppercase font-medium hover:opacity-100 py-4"
+                    className="text-xs tracking-[0.2em] uppercase font-medium hover:opacity-100 py-4"
                   >
                     {type.value}
                   </LocalizedLink>

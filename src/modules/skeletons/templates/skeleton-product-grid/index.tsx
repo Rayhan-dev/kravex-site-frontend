@@ -6,7 +6,7 @@ const SkeletonProductGrid = () => {
   return (
     <Layout className="gap-y-10 md:gap-y-16 mb-16 md:mb-20">
       {repeat(8).map((index) => (
-        <LayoutColumn className="md:!col-span-3 !col-span-6" key={index}>
+        <LayoutColumn className="md:!col-span-3 !col-span-12" key={index}>
           <SkeletonProductPreview />
         </LayoutColumn>
       ))}

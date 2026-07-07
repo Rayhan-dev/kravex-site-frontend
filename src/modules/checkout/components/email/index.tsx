@@ -55,7 +55,7 @@ const Email = ({
     <>
       <div className="flex items-start justify-between mb-6 md:mb-8">
         <div className="flex-1">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-black/40 mb-1.5">01</p>
+          <p className="text-2xs tracking-[0.3em] uppercase text-black/40 mb-1.5">01</p>
           <div className="flex flex-wrap items-center gap-4">
             <p className={twJoin("transition-all duration-75", isOpen ? "font-medium" : "text-black/50")}>
               Email

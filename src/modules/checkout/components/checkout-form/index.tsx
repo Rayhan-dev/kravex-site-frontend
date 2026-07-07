@@ -54,7 +54,7 @@ const Field: React.FC<{
   className?: string
 }> = ({ label, error, children, className }) => (
   <div className={twMerge("flex flex-col gap-1.5", className)}>
-    <span className="text-[10px] tracking-[0.25em] uppercase text-black/60">{label}</span>
+    <span className="text-2xs tracking-[0.25em] uppercase text-black/60">{label}</span>
     {children}
     {error && <p className="text-xs text-red-900">{error}</p>}
   </div>
@@ -395,7 +395,7 @@ const CheckoutFormInner: React.FC<{ countryCode: string }> = ({ countryCode }) =
                         <span className="flex items-center gap-2">
                           {paymentInfoMap[method.id]?.title ?? method.id}
                           {isManual(method.id) && process.env.NODE_ENV === "development" && (
-                            <span className="text-[9px] bg-orange-100 text-orange-700 px-1.5 py-0.5 uppercase tracking-wider">
+                            <span className="text-2xs bg-orange-100 text-orange-700 px-1.5 py-0.5 uppercase tracking-wider">
                               Test
                             </span>
                           )}

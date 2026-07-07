@@ -24,7 +24,7 @@ const ProductInfo = ({ product, size = "full" }: ProductInfoProps) => {
           href={`/collections/${product.collection.handle}`}
           className="hover:opacity-100"
         >
-          <p className="text-[10px] tracking-[0.3em] uppercase text-black/40 mb-4">
+          <p className="text-2xs tracking-[0.3em] uppercase text-black/40 mb-4">
             {product.collection.title}
           </p>
         </LocalizedLink>
