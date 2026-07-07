@@ -3,6 +3,7 @@
 import { HttpTypes } from "@medusajs/types"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { Carousel } from "@/components/Carousel"
+import { LocalizedButtonLink } from "@/components/LocalizedLink"
 import ProductPreview from "@modules/products/components/product-preview"
 import { withReactQueryProvider } from "@lib/util/react-query"
 
@@ -36,7 +37,17 @@ export const OurProducts = withReactQueryProvider<{
             className="mb-16 md:mb-28 last:mb-0"
             heading={
               <div className="w-full">
-                <h4 className="text-lg md:text-2xl">{group.value}</h4>
+                <div className="flex items-center justify-between gap-4">
+                  <h4 className="text-2xl md:text-3xl">{group.value}</h4>
+                  <LocalizedButtonLink
+                    href={`/store?type=${encodeURIComponent(group.value)}`}
+                    variant="outline"
+                    size="sm"
+                    className="shrink-0"
+                  >
+                    See all
+                  </LocalizedButtonLink>
+                </div>
                 <div className="mt-3 h-px w-full bg-black" />
               </div>
             }

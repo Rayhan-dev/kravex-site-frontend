@@ -10,6 +10,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1, "liga" 1;
+    /* Prevent any stray full-bleed element from creating a horizontal
+       scrollbar on mobile. `clip` (unlike `hidden`) doesn't break sticky. */
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
   }
 
   /* Kravex editorial: headlines are always Bebas Neue, all-caps */
