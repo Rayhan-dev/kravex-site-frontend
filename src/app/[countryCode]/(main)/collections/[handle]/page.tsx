@@ -63,7 +63,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { handle } = await params
+  const { handle, countryCode } = await params
 
   const collection = await getCollectionByHandle(handle, [
     "id",
@@ -79,12 +79,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     collection.metadata ?? {}
   )
 
+  const title = `${collection.title} | Kravex`
+  const description =
+    collectionDetails.success && collectionDetails.data.description
+      ? collectionDetails.data.description
+      : `Shop the ${collection.title} collection at Kravex — anime & game blade replicas delivered across Bangladesh.`
+  const canonical = `/${countryCode}/collections/${handle}`
+
   const metadata = {
-    title: `${collection.title} | Kravex`,
-    description:
-      collectionDetails.success && collectionDetails.data.description
-        ? collectionDetails.data.description
-        : `${collection.title} collection`,
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: canonical,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   } as Metadata
 
   return metadata

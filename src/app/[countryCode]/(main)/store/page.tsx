@@ -4,8 +4,19 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import StoreTemplate from "@modules/store/templates"
 
 export const metadata: Metadata = {
-  title: "Store",
-  description: "Explore all of our products.",
+  title: "Katana Shop — All Anime & Game Katanas | Kravex BD",
+  description:
+    "Browse the full Kravex katana shop — every anime and game katana, sword and knife available in Bangladesh. Demon Slayer, One Piece, Bleach, Naruto & Valorant blades, delivered across BD.",
+  keywords: [
+    "katana shop bd",
+    "anime shop bd",
+    "buy katana bangladesh",
+    "anime sword shop bangladesh",
+    "katana price in bangladesh",
+  ],
+  alternates: {
+    canonical: "/store",
+  },
 }
 
 type Params = {

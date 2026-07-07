@@ -17,26 +17,68 @@ export const metadata: Metadata = {
   description:
     "Kravex — Bangladesh's premier store for anime and game katana replicas. Shop Zoro, Demon Slayer, Bleach, Naruto, One Piece, Devil May Cry swords and Valorant knives. Wooden, luminous & metal blades delivered across Bangladesh.",
   keywords: [
-    "anime katana Bangladesh",
-    "game katana Bangladesh",
-    "buy katana Bangladesh",
-    "Zoro sword replica",
-    "Demon Slayer katana Bangladesh",
+    "katana shop bd",
+    "anime shop bd",
+    "katana shop bangladesh",
+    "anime shop bangladesh",
+    "katana shop in bangladesh",
+    "anime shop in bangladesh",
+    "buy katana bd",
+    "buy katana bangladesh",
+    "katana price in bangladesh",
+    "anime katana bd",
+    "anime katana bangladesh",
+    "game katana bangladesh",
+    "anime sword shop bangladesh",
+    "sword shop bd",
+    "katana bd",
+    "katana bangladesh",
+    "anime store bangladesh",
+    "Zoro sword replica bangladesh",
+    "Demon Slayer katana bangladesh",
     "Bleach Zanpakuto replica",
-    "Naruto sword Bangladesh",
-    "One Piece katana",
+    "Naruto sword bangladesh",
+    "One Piece katana bd",
     "Devil May Cry Rebellion sword",
-    "Valorant knife replica Bangladesh",
-    "wooden katana Bangladesh",
-    "metal katana Bangladesh",
-    "luminous katana Bangladesh",
+    "Valorant knife replica bangladesh",
+    "wooden katana bangladesh",
+    "metal katana bangladesh",
+    "luminous katana bangladesh",
+    "Kravex",
     "Kravex Bangladesh",
-    "anime sword shop Bangladesh",
+    "Kravex Collectibles",
   ],
+  applicationName: "Kravex",
+  authors: [{ name: "Kravex" }],
+  creator: "Kravex",
+  publisher: "Kravex",
+  category: "shopping",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     siteName: "Kravex",
     locale: "en_BD",
     type: "website",
+    url: getBaseURL(),
+    title: "Kravex | Anime & Game Katanas in Bangladesh",
+    description:
+      "Bangladesh's premier store for anime and game katana replicas. Shop Zoro, Demon Slayer, Bleach, Naruto, One Piece and Valorant blades — delivered across Bangladesh.",
+    images: [
+      {
+        url: "/images/content/kravex-banner.webp",
+        width: 1200,
+        height: 630,
+        alt: "Kravex — Anime & Game Katanas in Bangladesh",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kravex | Anime & Game Katanas in Bangladesh",
+    description:
+      "Bangladesh's premier store for anime and game katana replicas. Delivered across Bangladesh.",
+    images: ["/images/content/kravex-banner.webp"],
   },
   robots: {
     index: true,
@@ -44,6 +86,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
 }
@@ -63,6 +108,55 @@ const hankenGrotesk = Hanken_Grotesk({
 })
 
 export default function RootLayout(props: { children: React.ReactNode }) {
+  const baseUrl = getBaseURL().replace(/\/$/, "")
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "OnlineStore"],
+        "@id": `${baseUrl}/#organization`,
+        name: "Kravex",
+        alternateName: [
+          "Kravex Bangladesh",
+          "Katana Shop BD",
+          "Anime Shop BD",
+          "Kravex Collectibles",
+        ],
+        url: baseUrl,
+        logo: `${baseUrl}/images/content/kravex-banner.webp`,
+        image: `${baseUrl}/images/content/kravex-banner.webp`,
+        description:
+          "Bangladesh's online katana & anime shop — anime and game blade replicas (Demon Slayer, One Piece, Bleach, Naruto, Valorant) delivered nationwide across BD.",
+        slogan: "Bangladesh's anime & game katana shop",
+        areaServed: {
+          "@type": "Country",
+          name: "Bangladesh",
+        },
+        sameAs: [
+          "https://www.instagram.com/kravex_collectibles/",
+          "https://www.facebook.com/profile.php?id=61591535542705",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${baseUrl}/#website`,
+        name: "Kravex",
+        url: baseUrl,
+        publisher: { "@id": `${baseUrl}/#organization` },
+        inLanguage: "en-BD",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${baseUrl}/bd/search?query={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
+  }
+
   return (
     <html
       lang="en-BD"
@@ -70,6 +164,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       className={`antialiased ${hankenGrotesk.variable} ${bebasNeue.variable}`}
     >
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <main className="relative">{props.children}</main>
         <WhatsAppButton />
         <SpeedInsights />

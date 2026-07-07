@@ -9,21 +9,30 @@ import { RecentlyAddedProducts } from "@/components/RecentlyAddedProducts"
 import { Reveal } from "@/components/Reveal"
 
 export const metadata: Metadata = {
-  title: "Kravex | Anime & Game Katanas in Bangladesh",
+  // `absolute` bypasses the "%s | Kravex" root template so the brand name
+  // isn't duplicated, and puts the target keywords first (highest weight).
+  title: {
+    absolute:
+      "Katana Shop BD | Anime Katana & Sword Shop in Bangladesh — Kravex",
+  },
   description:
-    "Kravex — Bangladesh's premier destination for anime and game katanas. Shop Zoro, Demon Slayer, Bleach, Naruto, One Piece, Devil May Cry swords and Valorant knives. Wooden, luminous & metal blades.",
+    "Kravex is Bangladesh's online katana & anime shop. Buy anime and game katanas, swords and knives — Demon Slayer, One Piece, Bleach, Naruto & Valorant blades — delivered nationwide across BD.",
   keywords: [
-    "anime katana Bangladesh",
-    "game katana Bangladesh",
+    "katana shop bd",
+    "anime shop bd",
+    "katana shop bangladesh",
+    "anime shop bangladesh",
+    "buy katana bd",
+    "katana price in bangladesh",
+    "anime katana bd",
+    "sword shop bd",
+    "anime sword shop bangladesh",
+    "katana bd",
     "Zoro sword Bangladesh",
     "Demon Slayer katana",
-    "Bleach sword",
-    "Naruto sword",
     "One Piece katana",
-    "Devil May Cry sword",
     "Valorant knife replica",
-    "buy katana Bangladesh",
-    "Kravex",
+    "Kravex Collectibles",
   ],
 }
 
@@ -327,6 +336,62 @@ export default async function Home({
         <ProductTypesSection countryCode={countryCode} />
         <RecentlyAddedSection countryCode={countryCode} />
       </div>
+
+      {/* SEO CONTENT — crawlable copy targeting local search intent.
+          Kept out of the hero, styled on-brand (cream / bebas headings). */}
+      <section
+        aria-label="About Kravex"
+        className="border-t border-black/10"
+        style={{ backgroundColor: "#ede8d0" }}
+      >
+        <div className="max-w-[1000px] mx-auto px-6 py-16 md:py-24">
+          <h2
+            className="font-bebas leading-none text-black mb-6"
+            style={{ fontSize: "clamp(2.5rem,6vw,4rem)", letterSpacing: "0.02em" }}
+          >
+            Katana Shop in Bangladesh
+          </h2>
+          <p className="text-sm md:text-base leading-relaxed text-black/70 mb-5 max-w-3xl">
+            Kravex is Bangladesh&apos;s home-grown <strong>anime and game
+            katana shop</strong> — a dedicated <strong>katana shop in BD</strong>{" "}
+            for collectors and enthusiasts. From Demon Slayer Nichirin blades and
+            One Piece Meito swords to Bleach Zanpakuto katanas and Valorant
+            melee knives, every replica is hand-picked and priced for fans across
+            Bangladesh. Order online and we deliver nationwide — Dhaka,
+            Chittagong, Sylhet and beyond.
+          </p>
+
+          <h2
+            className="font-bebas leading-none text-black mt-12 mb-6"
+            style={{ fontSize: "clamp(2.5rem,6vw,4rem)", letterSpacing: "0.02em" }}
+          >
+            Anime Shop BD — Swords, Katanas &amp; Collectibles
+          </h2>
+          <p className="text-sm md:text-base leading-relaxed text-black/70 mb-5 max-w-3xl">
+            Looking for an <strong>anime shop in Bangladesh</strong>? Kravex
+            brings your favourite series to life with wooden, luminous and metal
+            blades. Whether you want to <strong>buy a katana in BD</strong>,
+            compare <strong>katana prices in Bangladesh</strong>, or find a
+            character knife from Valorant, our{" "}
+            <LocalizedLink
+              href="/store"
+              className="underline underline-offset-4 hover:text-black"
+            >
+              full katana &amp; sword collection
+            </LocalizedLink>{" "}
+            is a click away. Fast delivery, secure checkout and dedicated support
+            across Bangladesh.
+          </p>
+
+          <LocalizedLink
+            href="/store"
+            className="kx-btn inline-block bg-black px-8 py-4 mt-4 text-xs font-semibold tracking-[0.2em] uppercase"
+            style={{ color: "#ede8d0" }}
+          >
+            Shop All Katanas
+          </LocalizedLink>
+        </div>
+      </section>
     </>
   )
 }

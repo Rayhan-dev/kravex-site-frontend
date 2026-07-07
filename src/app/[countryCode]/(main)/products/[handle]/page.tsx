@@ -7,6 +7,8 @@ import {
   getProductByHandle,
   getProductFashionDataByHandle,
 } from "@lib/data/products"
+import { getProductPrice } from "@lib/util/get-product-price"
+import { getBaseURL } from "@lib/util/env"
 import ProductTemplate from "@modules/products/templates"
 
 type Props = {
@@ -67,13 +69,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     notFound()
   }
 
+  const description =
+    product.description ||
+    product.subtitle ||
+    `Buy ${product.title} at Kravex — authentic anime & game blade replicas delivered across Bangladesh.`
+
+  const title = `${product.title} | Kravex`
+  const canonical = `/${countryCode}/products/${handle}`
+  const images = product.thumbnail ? [product.thumbnail] : []
+
   return {
-    title: `${product.title} | Kravex`,
-    description: `${product.title}`,
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
     openGraph: {
-      title: `${product.title} | Kravex`,
-      description: `${product.title}`,
-      images: product.thumbnail ? [product.thumbnail] : [],
+      title,
+      description,
+      type: "website",
+      url: canonical,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images,
     },
   }
 }
@@ -95,12 +117,58 @@ export default async function ProductPage({ params }: Props) {
     notFound()
   }
 
+  const { cheapestPrice } = getProductPrice({ product: pricedProduct })
+  const baseUrl = getBaseURL().replace(/\/$/, "")
+  const productUrl = `${baseUrl}/${countryCode}/products/${handle}`
+  const inStock = pricedProduct.variants?.some(
+    (v) =>
+      typeof v.inventory_quantity !== "number" || v.inventory_quantity > 0
+  )
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: pricedProduct.title,
+    description:
+      pricedProduct.description ||
+      pricedProduct.subtitle ||
+      pricedProduct.title,
+    image: pricedProduct.images?.length
+      ? pricedProduct.images.map((i) => i.url)
+      : pricedProduct.thumbnail
+        ? [pricedProduct.thumbnail]
+        : undefined,
+    sku: pricedProduct.variants?.[0]?.sku ?? undefined,
+    brand: { "@type": "Brand", name: "Kravex" },
+    url: productUrl,
+    ...(cheapestPrice
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: productUrl,
+            price: cheapestPrice.calculated_price_number,
+            priceCurrency: cheapestPrice.currency_code?.toUpperCase(),
+            availability: inStock
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+            seller: { "@type": "Organization", name: "Kravex" },
+          },
+        }
+      : {}),
+  }
+
   return (
-    <ProductTemplate
-      product={pricedProduct}
-      materials={fashionData.materials}
-      region={region}
-      countryCode={countryCode}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <ProductTemplate
+        product={pricedProduct}
+        materials={fashionData.materials}
+        region={region}
+        countryCode={countryCode}
+      />
+    </>
   )
 }
