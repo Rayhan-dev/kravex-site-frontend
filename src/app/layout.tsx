@@ -48,6 +48,9 @@ export const metadata: Metadata = {
     "Kravex Bangladesh",
     "Kravex Collectibles",
   ],
+  icons: {
+    icon: "/favicon.ico"
+  },
   applicationName: "Kravex",
   authors: [{ name: "Kravex" }],
   creator: "Kravex",
