@@ -1,6 +1,6 @@
 import { ProductPageGallery } from "@/components/ProductPageGallery"
+import { HoverZoomImage } from "@/components/HoverZoomImage"
 import { HttpTypes } from "@medusajs/types"
-import Image from "next/image"
 
 type ImageGalleryProps = {
   images: HttpTypes.StoreProductImage[]
@@ -17,20 +17,13 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
   return (
     <ProductPageGallery className={className}>
       {filteredImages.map((image, index) => (
-        <div
+        <HoverZoomImage
           key={image.id}
-          className="relative aspect-square w-full overflow-hidden"
-        >
-          <Image
-            key={image.id}
-            src={image.url}
-            priority={index <= 2 ? true : false}
-            alt={`Product image ${index + 1}`}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 589px, (max-width: 1279px) 384px, 456px"
-            className="object-cover"
-          />
-        </div>
+          src={image.url}
+          priority={index <= 2}
+          alt={`Product image ${index + 1}`}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 589px, (max-width: 1279px) 384px, 456px"
+        />
       ))}
     </ProductPageGallery>
   )
