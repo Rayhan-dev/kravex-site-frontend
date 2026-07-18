@@ -1,15 +1,12 @@
 import React, { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
-import Image from "next/image"
 
-import { collectionMetadataCustomFieldsSchema } from "@lib/util/collections"
 import ImageGallery from "@modules/products/components/image-gallery"
 import ProductActions from "@modules/products/components/product-actions"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
-import { LocalizedLink } from "@/components/LocalizedLink"
 import { Layout, LayoutColumn } from "@/components/Layout"
 
 type ProductTemplateProps = {
@@ -41,10 +38,6 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   const hasImages = Boolean(
     product.images &&
     product.images.filter((image) => Boolean(image.url)).length > 0
-  )
-
-  const collectionDetails = collectionMetadataCustomFieldsSchema.safeParse(
-    product.collection?.metadata ?? {}
   )
 
   return (
