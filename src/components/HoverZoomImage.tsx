@@ -23,11 +23,14 @@ export const HoverZoomImage: React.FC<HoverZoomImageProps> = ({
   zoom = 2,
 }) => {
   const [origin, setOrigin] = React.useState("50% 50%")
-  // Desktop: magnify only while the pointer hovers.
-  const [isHovering, setIsHovering] = React.useState(false)
+  // Desktop: a click toggles a sticky zoom, then moving the mouse pans.
+  const [isClickZoomed, setIsClickZoomed] = React.useState(false)
   // Touch: tap toggles a sticky zoom, then drag pans.
   const [isTapZoomed, setIsTapZoomed] = React.useState(false)
   const touchStart = React.useRef<{ x: number; y: number } | null>(null)
+  // A tap fires a synthetic click after touchend; this flag lets us ignore it
+  // so touch doesn't toggle both isTapZoomed and isClickZoomed.
+  const suppressClick = React.useRef(false)
 
   const setOriginFromPoint = React.useCallback(
     (clientX: number, clientY: number, el: HTMLElement) => {
@@ -43,9 +46,27 @@ export const HoverZoomImage: React.FC<HoverZoomImageProps> = ({
 
   const handleMouseMove = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
+      // Only pan while zoomed; otherwise the origin is irrelevant until a click.
+      if (!isClickZoomed) return
       setOriginFromPoint(event.clientX, event.clientY, event.currentTarget)
     },
-    [setOriginFromPoint]
+    [isClickZoomed, setOriginFromPoint]
+  )
+
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      // Ignore the synthetic click that follows a touch tap.
+      if (suppressClick.current) {
+        suppressClick.current = false
+        return
+      }
+      // Zoom in at the clicked point; a second click zooms back out.
+      if (!isClickZoomed) {
+        setOriginFromPoint(event.clientX, event.clientY, event.currentTarget)
+      }
+      setIsClickZoomed((prev) => !prev)
+    },
+    [isClickZoomed, setOriginFromPoint]
   )
 
   const handleTouchStart = React.useCallback(
@@ -83,6 +104,8 @@ export const HoverZoomImage: React.FC<HoverZoomImageProps> = ({
         Math.abs(touch.clientY - start.y) > TAP_MOVE_THRESHOLD
       // A tap (not a drag/swipe) toggles the zoom at the tapped point.
       if (!moved) {
+        // Swallow the synthetic click that follows this tap.
+        suppressClick.current = true
         if (!isTapZoomed) {
           setOriginFromPoint(touch.clientX, touch.clientY, event.currentTarget)
         }
@@ -92,7 +115,7 @@ export const HoverZoomImage: React.FC<HoverZoomImageProps> = ({
     [isTapZoomed, setOriginFromPoint]
   )
 
-  const isZoomed = isHovering || isTapZoomed
+  const isZoomed = isClickZoomed || isTapZoomed
 
   return (
     // overflow-hidden keeps the magnified image clipped inside this box, so it
@@ -101,10 +124,9 @@ export const HoverZoomImage: React.FC<HoverZoomImageProps> = ({
     <div
       className={
         "relative aspect-square w-full overflow-hidden " +
-        (isTapZoomed ? "cursor-zoom-out" : "cursor-zoom-in max-lg:cursor-default")
+        (isZoomed ? "cursor-zoom-out" : "cursor-zoom-in")
       }
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onClick={handleClick}
       onMouseMove={handleMouseMove}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}

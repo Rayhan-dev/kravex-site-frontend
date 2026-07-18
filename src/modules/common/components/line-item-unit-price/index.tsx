@@ -1,35 +1,49 @@
-import { getPricesForVariant } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
 import { twMerge } from "tailwind-merge"
 
+import { convertToLocale } from "@lib/util/money"
+
 type LineItemUnitPriceProps = {
   item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem
+  currencyCode: string
   className?: string
   regularPriceClassName?: string
 }
 
+/**
+ * Per-unit price for a cart/order line item.
+ *
+ * Reads the price captured on the line item itself (`unit_price`, and the
+ * original `compare_at_unit_price` for the sale strike-through) rather than
+ * re-deriving it from the live product variant. This keeps every row consistent
+ * with the cart totals (Subtotal = sum of unit_price × quantity) and reflects
+ * the actual price the customer is charged, even if the product's live price
+ * changes after the item was added.
+ */
 const LineItemUnitPrice = ({
   item,
+  currencyCode,
   className,
   regularPriceClassName,
 }: LineItemUnitPriceProps) => {
-  const {
-    original_price,
-    calculated_price,
-    original_price_number,
-    calculated_price_number,
-  } = item.variant ? (getPricesForVariant(item.variant) ?? {}) : {}
+  const unitPrice = item.unit_price ?? 0
+  const originalUnitPrice = item.compare_at_unit_price
   const hasReducedPrice =
-    (calculated_price_number ?? 0) < (original_price_number ?? 0)
+    originalUnitPrice !== undefined && originalUnitPrice > unitPrice
 
   return (
     <div className={className}>
       {hasReducedPrice ? (
         <>
           <p className="text-base sm:text-sm font-semibold text-red-primary">
-            {calculated_price}
+            {convertToLocale({ amount: unitPrice, currency_code: currencyCode })}
           </p>
-          <p className="text-grayscale-500 line-through">{original_price}</p>
+          <p className="text-grayscale-500 line-through">
+            {convertToLocale({
+              amount: originalUnitPrice,
+              currency_code: currencyCode,
+            })}
+          </p>
         </>
       ) : (
         <p
@@ -38,7 +52,7 @@ const LineItemUnitPrice = ({
             regularPriceClassName
           )}
         >
-          {calculated_price}
+          {convertToLocale({ amount: unitPrice, currency_code: currencyCode })}
         </p>
       )}
     </div>

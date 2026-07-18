@@ -4,6 +4,7 @@ import { getVariantItemsInStock } from "@lib/util/inventory"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import DeleteButton from "@modules/common/components/delete-button"
 import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
+import LineItemPrice from "@modules/common/components/line-item-price"
 import Thumbnail from "@modules/products/components/thumbnail"
 import { InputNumberField } from "@/components/InputNumberField"
 import { LocalizedLink } from "@/components/LocalizedLink"
@@ -13,10 +14,11 @@ import { withReactQueryProvider } from "@lib/util/react-query"
 
 type ItemProps = {
   item: HttpTypes.StoreCartLineItem
+  currencyCode: string
   className?: string
 }
 
-const Item = ({ item, className }: ItemProps) => {
+const Item = ({ item, currencyCode, className }: ItemProps) => {
   const { handle } = item.variant?.product ?? {}
   const {
     quantity,
@@ -57,7 +59,16 @@ const Item = ({ item, className }: ItemProps) => {
             <p className="text-black/40 text-xs sm:text-base max-sm:mb-4">
               {item.variant?.title}
             </p>
-            <LineItemUnitPrice item={item} className="sm:hidden" />
+            {/* Per-unit "each" price, shown only when the quantity makes it
+                distinct from the line total on the right. */}
+            {item.quantity > 1 && (
+              <LineItemUnitPrice
+                item={item}
+                currencyCode={currencyCode}
+                className="mt-1"
+                regularPriceClassName="text-xs font-normal text-black/50"
+              />
+            )}
           </div>
           <InputNumberField
             key={item.id}
@@ -74,7 +85,7 @@ const Item = ({ item, className }: ItemProps) => {
           />
         </div>
         <div className="flex flex-col justify-between items-end text-right">
-          <LineItemUnitPrice item={item} className="max-sm:hidden" />
+          <LineItemPrice item={item} currencyCode={currencyCode} />
           <DeleteButton id={item.id} data-testid="product-delete-button" />
         </div>
       </div>

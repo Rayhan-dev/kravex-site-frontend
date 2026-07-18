@@ -112,7 +112,7 @@ const RecentlyAddedSection: React.FC<{ countryCode: string }> = async ({
   const {
     response: { products },
   } = await getProductsList({
-    queryParams: { limit: 8, order: "-created_at" },
+    queryParams: { limit: 20, order: "-created_at" },
     countryCode,
   })
 

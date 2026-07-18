@@ -13,7 +13,10 @@ const CartTotals: React.FC<CartTotalsProps> = ({ cart }) => {
   const {
     currency_code,
     total,
-    subtotal,
+    // `cart.subtotal` includes shipping (item_subtotal + shipping_subtotal), so
+    // use `item_subtotal` here to show items only. Shipping is its own line and
+    // is added into the Total below.
+    item_subtotal,
     tax_total,
     discount_total,
     shipping_total,
@@ -28,7 +31,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ cart }) => {
             <p>Subtotal</p>
           </div>
           <div className="self-end">
-            <p>{convertToLocale({ amount: subtotal ?? 0, currency_code })}</p>
+            <p>{convertToLocale({ amount: item_subtotal ?? 0, currency_code })}</p>
           </div>
         </div>
         {!!discount_total && (

@@ -29,8 +29,12 @@ export default async function RelatedProducts({
   if (product.collection_id) {
     queryParams.collection_id = [product.collection_id]
   }
-  if (product.tags) {
-    queryParams.tag_id = product.tags.map((t) => t.value).filter(Boolean)
+  // Only filter by tags when the product actually has some. An empty tags
+  // array is still truthy, and passing an empty `tag_id[]` makes Medusa match
+  // nothing — which silently hid all related products. Filter by tag id, not
+  // the tag's display value.
+  if (product.tags?.length) {
+    queryParams.tag_id = product.tags.map((t) => t.id).filter(Boolean)
   }
   queryParams.is_giftcard = false
 

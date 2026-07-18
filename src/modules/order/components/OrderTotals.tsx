@@ -7,7 +7,10 @@ export const OrderTotals: React.FC<{
   const {
     currency_code,
     total,
-    subtotal,
+    // `subtotal` includes shipping (item_subtotal + shipping_subtotal); use
+    // `item_subtotal` so the Subtotal line shows items only, consistent with the
+    // cart and checkout. Shipping is its own line and is added into the Total.
+    item_subtotal,
     tax_total,
     shipping_total,
     discount_total,
@@ -24,7 +27,7 @@ export const OrderTotals: React.FC<{
           <p>
             {convertToLocale({
               currency_code,
-              amount: subtotal ?? 0,
+              amount: item_subtotal ?? 0,
             })}
           </p>
         </div>

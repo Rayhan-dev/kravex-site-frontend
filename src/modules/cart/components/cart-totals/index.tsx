@@ -20,12 +20,19 @@ const CartTotals: React.FC<CartTotalsProps> = ({
   const {
     currency_code,
     total,
-    subtotal,
+    // `cart.subtotal` includes shipping (item_subtotal + shipping_subtotal), so
+    // use `item_subtotal` here to show items only. Shipping is its own line and
+    // is added into the Total below.
+    item_subtotal,
     tax_total,
     shipping_total,
     discount_total,
     gift_card_total,
   } = cart
+
+  // No shipping method chosen yet (e.g. on the cart page) — shipping isn't known
+  // until checkout, so show a placeholder instead of a misleading 0.
+  const hasShippingMethod = Boolean(cart.shipping_methods?.length)
 
   return (
     <div className={className}>
@@ -37,8 +44,8 @@ const CartTotals: React.FC<CartTotalsProps> = ({
       >
         <div className="flex justify-between text-sm">
           <p className="text-black/50">Subtotal</p>
-          <p data-testid="cart-subtotal" data-value={subtotal || 0}>
-            {convertToLocale({ amount: subtotal ?? 0, currency_code })}
+          <p data-testid="cart-subtotal" data-value={item_subtotal || 0}>
+            {convertToLocale({ amount: item_subtotal ?? 0, currency_code })}
           </p>
         </div>
         {!!discount_total && (
@@ -60,7 +67,9 @@ const CartTotals: React.FC<CartTotalsProps> = ({
             )}
           </p>
           <p data-testid="cart-shipping" data-value={shipping_total || 0}>
-            {convertToLocale({ amount: shipping_total ?? 0, currency_code })}
+            {hasShippingMethod
+              ? convertToLocale({ amount: shipping_total ?? 0, currency_code })
+              : "Calculated at checkout"}
           </p>
         </div>
         {!!tax_total && (
