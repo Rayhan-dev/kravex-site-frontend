@@ -44,7 +44,7 @@ const LineItemPrice = ({
       <span
         className={twMerge(
           "font-semibold",
-          hasReducedPrice && "text-gold"
+          hasReducedPrice && "text-red-900"
         )}
       >
         {convertToLocale({ amount: lineTotal, currency_code: currencyCode })}

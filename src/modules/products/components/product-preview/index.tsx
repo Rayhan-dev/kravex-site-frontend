@@ -207,7 +207,7 @@ export default function ProductPreview({
             <div className="mt-2 flex items-baseline gap-2">
               {hasReducedPrice ? (
                 <>
-                  <p className="font-semibold text-sm text-gold">
+                  <p className="font-semibold text-sm text-red-900">
                     {cheapestPrice.calculated_price}
                   </p>
                   <p className="text-xs text-grayscale-500 line-through">

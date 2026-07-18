@@ -35,7 +35,7 @@ const LineItemUnitPrice = ({
     <div className={className}>
       {hasReducedPrice ? (
         <>
-          <p className="text-base sm:text-sm font-semibold text-gold">
+          <p className="text-base sm:text-sm font-semibold text-red-900">
             {convertToLocale({ amount: unitPrice, currency_code: currencyCode })}
           </p>
           <p className="text-grayscale-500 line-through">
