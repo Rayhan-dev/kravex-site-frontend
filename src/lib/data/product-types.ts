@@ -14,8 +14,10 @@ export const getProductTypesList = async function (
       }>
     >("/store/custom/product-types", {
       query: { limit, offset, fields: fields ? fields.join(",") : undefined },
-      next: { tags: ["product-types"] },
-      cache: "force-cache",
+      // Time-based revalidation so the statically-rendered header/nav picks up
+      // product types added in the backend without a redeploy. (force-cache
+      // would cache indefinitely and never show new types in production.)
+      next: { tags: ["product-types"], revalidate: 60 },
     })
     .then(({ product_types, count }) => ({
       productTypes: product_types,
@@ -34,8 +36,7 @@ export const getProductTypeByHandle = async function (
       }>
     >("/store/custom/product-types", {
       query: { handle, limit: 1 },
-      next: { tags: ["product-types"] },
-      cache: "force-cache",
+      next: { tags: ["product-types"], revalidate: 60 },
     })
     .then(({ product_types }) => product_types[0])
 }

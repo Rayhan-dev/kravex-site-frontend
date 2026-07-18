@@ -7,8 +7,10 @@ export const retrieveCollection = async function (id: string) {
     .fetch<{ collection: HttpTypes.StoreCollection }>(
       `/store/collections/${id}`,
       {
-        next: { tags: ["collections"] },
-        cache: "force-cache",
+        // Time-based revalidation so collection changes in the backend show up
+        // without a redeploy. (force-cache caches indefinitely and, having no
+        // expiry, isn't cleared by redeploys — the stale-in-prod bug.)
+        next: { tags: ["collections"], revalidate: 60 },
       }
     )
     .then(({ collection }) => collection)
@@ -25,8 +27,7 @@ export const getCollectionsList = async function (
       count: number
     }>("/store/collections", {
       query: { limit, offset, fields: fields ? fields.join(",") : undefined },
-      next: { tags: ["collections"] },
-      cache: "force-cache",
+      next: { tags: ["collections"], revalidate: 60 },
     })
     .then(({ collections }) => ({ collections, count: collections.length }))
 }
@@ -42,8 +43,7 @@ export const getCollectionByHandle = async function (
         fields: fields ? fields.join(",") : undefined,
         limit: 1,
       },
-      next: { tags: ["collections"] },
-      cache: "force-cache",
+      next: { tags: ["collections"], revalidate: 60 },
     })
     .then(({ collections }) => collections[0])
 }
