@@ -15,7 +15,7 @@ export const HeaderDrawer: React.FC<{
     label: string | undefined
   }[]
   productTypes?: { id: string; value: string }[]
-}> = ({ countryOptions, productTypes = [] }) => {
+}> = ({  productTypes = [] }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   // const searchParams = useSearchParams()
