@@ -1,7 +1,7 @@
 import * as React from "react"
 import { listRegions } from "@lib/data/regions"
 import { getProductTypesList } from "@lib/data/product-types"
-import { SearchField } from "@/components/SearchField"
+// import { SearchField } from "@/components/SearchField"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { LocalizedLink } from "@/components/LocalizedLink"
 import { HeaderDrawer } from "@/components/HeaderDrawer"
@@ -69,9 +69,9 @@ export const Header: React.FC = async () => {
                 ))}
               </div>
               <div className="flex items-center gap-3 lg:gap-6 max-md:hidden">
-                <React.Suspense>
+                {/* <React.Suspense>
                   <SearchField countryOptions={countryOptions} />
-                </React.Suspense>
+                </React.Suspense> */}
                 <LoginLink className="p-1 text-black" />
                 <CartButton />
               </div>

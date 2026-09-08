@@ -5,8 +5,8 @@ import { Button } from "@/components/Button"
 import { Icon } from "@/components/Icon"
 import { Drawer } from "@/components/Drawer"
 import { LocalizedLink } from "@/components/LocalizedLink"
-import { SearchField } from "@/components/SearchField"
-import { useSearchParams } from "next/navigation"
+// import { SearchField } from "@/components/SearchField"
+// import { useSearchParams } from "next/navigation"
 
 export const HeaderDrawer: React.FC<{
   countryOptions: {
@@ -18,12 +18,12 @@ export const HeaderDrawer: React.FC<{
 }> = ({ countryOptions, productTypes = [] }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
-  const searchParams = useSearchParams()
-  const searchQuery = searchParams.get("query")
+  // const searchParams = useSearchParams()
+  // const searchQuery = searchParams.get("query")
 
-  React.useEffect(() => {
-    if (searchQuery) setIsMenuOpen(false)
-  }, [searchQuery])
+  // React.useEffect(() => {
+  //   if (searchQuery) setIsMenuOpen(false)
+  // }, [searchQuery])
 
   return (
     <>
@@ -59,14 +59,14 @@ export const HeaderDrawer: React.FC<{
             </div>
 
             {/* Search */}
-            <div className="px-8 py-3.5 border-b border-black/10 shrink-0">
+            {/* <div className="px-8 py-3.5 border-b border-black/10 shrink-0">
               <SearchField
                 countryOptions={countryOptions}
                 isInputAlwaysShown
                 className="w-full"
                 inputContainerClassName="flex-1 max-w-full w-full"
               />
-            </div>
+            </div> */}
 
             {/* Nav links */}
             <nav className="flex flex-col px-8 pt-8 pb-12">
