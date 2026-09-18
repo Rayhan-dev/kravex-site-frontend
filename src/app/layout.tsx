@@ -7,6 +7,7 @@ import "../styles/globals.css"
 import React from "react"
 import { WebMCPProvider } from "@lib/webmcp/WebMCPProvider"
 import { WhatsAppButton } from "@/components/WhatsAppButton"
+import FacebookPixel from "@/components/FacebookPixel"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
