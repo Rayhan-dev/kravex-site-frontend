@@ -175,6 +175,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <WhatsAppButton />
         <SpeedInsights />
         <WebMCPProvider />
+        <FacebookPixel />
       </body>
     </html>
   )
