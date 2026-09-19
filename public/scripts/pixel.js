@@ -1,4 +1,6 @@
+console.log("🔥 CUSTOM PIXEL.JS LOADED");
 const PIXEL_ID = document.currentScript.getAttribute("data-pixel-id");
+console.log("🔥 PIXEL ID:", PIXEL_ID);
 
 function initializeFacebookPixel(f, b, e, v, n, t, s) {
   if (f.fbq) return;
