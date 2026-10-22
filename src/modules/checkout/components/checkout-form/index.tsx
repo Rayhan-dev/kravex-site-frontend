@@ -29,12 +29,12 @@ import { convertToLocale } from "@lib/util/money"
 import { isManual, paymentInfoMap } from "@lib/constants"
 import { Icon } from "@/components/Icon"
 import { Button } from "@/components/Button"
-
+import { isValidPhoneNumber } from "libphonenumber-js";
 // ── Form schema ──────────────────────────────────────────────────────────────
 const formSchema = z.object({
   email: z.string().email("Enter a valid email address"),
   name: z.string().min(2, "Enter your full name"),
-  phone: z.string(),
+  phone: z.string().refine(isValidPhoneNumber,"Enter a valid phone number"),
   address_1: z.string().min(1, "Enter your address"),
   city: z.string().min(1, "Enter your city"),
   shippingMethodId: z.string().min(1, "Select a shipping method"),
