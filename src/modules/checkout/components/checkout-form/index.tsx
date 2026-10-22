@@ -34,7 +34,7 @@ import { Button } from "@/components/Button"
 const formSchema = z.object({
   email: z.string().email("Enter a valid email address"),
   name: z.string().min(2, "Enter your full name"),
-  phone: z.string().optional(),
+  phone: z.string(),
   address_1: z.string().min(1, "Enter your address"),
   city: z.string().min(1, "Enter your city"),
   shippingMethodId: z.string().min(1, "Select a shipping method"),
