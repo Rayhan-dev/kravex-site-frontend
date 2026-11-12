@@ -13,6 +13,9 @@ module.exports = [
 
       // Build and output directories
       ".next/",
+      ".cloudflare/**",
+      ".vinext/**",
+      "dist/**",
       "out/",
 
       // Coverage

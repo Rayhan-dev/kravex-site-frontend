@@ -7,8 +7,7 @@ export const listCategories = async function () {
       "/store/product-categories",
       {
         query: { fields: "+category_children" },
-        next: { tags: ["categories"] },
-        cache: "force-cache",
+        next: { tags: ["categories"], revalidate: 60 },
       }
     )
     .then(({ product_categories }) => product_categories)
@@ -27,8 +26,7 @@ export const getCategoriesList = async function (
       offset,
       fields: fields ? fields.join(",") : undefined,
     },
-    next: { tags: ["categories"] },
-    cache: "force-cache",
+    next: { tags: ["categories"], revalidate: 60 },
   })
 }
 
@@ -37,8 +35,7 @@ export const getCategoryByHandle = async function (categoryHandle: string[]) {
     `/store/product-categories`,
     {
       query: { handle: categoryHandle },
-      next: { tags: ["categories"] },
-      cache: "force-cache",
+      next: { tags: ["categories"], revalidate: 60 },
     }
   )
 }

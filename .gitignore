@@ -54,3 +54,7 @@ dump.rdb
 /blob-report/
 /playwright/.cache/
 /playwright/.auth
+/dist/
+.vinext/
+.cloudflare/
+.env*

@@ -68,8 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         count: number
       }>("/store/products", {
         query: { fields: "handle,updated_at", limit, offset },
-        next: { tags: ["products"] },
-        cache: "force-cache",
+        next: { tags: ["products"], revalidate: 60 },
       })
 
       for (const p of products) {
