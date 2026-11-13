@@ -45,13 +45,12 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
       className="pt-18 md:pt-26 lg:pt-37 pb-16 md:pb-36"
       data-testid="product-container"
     >
-      <ImageGallery className="md:hidden" images={images} />
       <Layout>
         <LayoutColumn className="mb-26 md:mb-52">
           <div className="flex max-lg:flex-col gap-8 xl:gap-27">
             {hasImages && (
               <div className="lg:w-1/2 flex flex-1 flex-col gap-8">
-                <ImageGallery className="max-md:hidden" images={images} />
+                <ImageGallery className="max-md:-mx-4" images={images} />
               </div>
             )}
             <div className="sticky flex-1 top-0">

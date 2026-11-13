@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Bebas_Neue, Hanken_Grotesk } from "next/font/google"
 import { getBaseURL } from "@lib/util/env"
 
@@ -174,7 +173,6 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         />
         <main className="relative">{props.children}</main>
         <WhatsAppButton />
-        <SpeedInsights />
         <WebMCPProvider />
         <FacebookPixel />
       </body>

@@ -114,6 +114,7 @@ const RecentlyAddedSection: React.FC<{ countryCode: string }> = async ({
   } = await getProductsList({
     queryParams: { limit: 20, order: "-created_at" },
     countryCode,
+    revalidate: 120,
   })
 
   if (!products.length) {
@@ -141,6 +142,7 @@ const ProductTypesSection: React.FC<{ countryCode: string }> = async ({
       } = await getProductsList({
         queryParams: { limit: 12, type_id: [productType.id] },
         countryCode,
+        revalidate: 120,
       })
 
       return {

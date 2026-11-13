@@ -79,10 +79,12 @@ export const getProductsList = async function ({
   pageParam = 1,
   queryParams,
   countryCode,
+  revalidate = 30,
 }: {
   pageParam?: number
   queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductListParams
   countryCode: string
+  revalidate?: number
 }): Promise<{
   response: { products: HttpTypes.StoreProduct[]; count: number }
   nextPage: number | null
@@ -113,7 +115,7 @@ export const getProductsList = async function ({
         // Time-based revalidation so newly added/removed products appear.
         // (The "products" tag is only invalidated on cart actions, not on
         // admin product changes, so force-cache would serve a stale list.)
-        next: { tags: ["products"], revalidate: 30 },
+        next: { tags: ["products"], revalidate },
       }
     )
     .then(({ products, count }) => {
@@ -150,6 +152,21 @@ export const getProductsListWithSort = async function ({
   queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
 }> {
   const limit = queryParams?.limit || 12
+
+  // Medusa supports ordering by creation time and pagination. Price sorting
+  // still needs the existing client-side fallback for calculated prices.
+  if (sortBy === "created_at") {
+    const result = await getProductsList({
+      pageParam: page,
+      queryParams: { ...queryParams, order: "-created_at" },
+      countryCode,
+    })
+    return {
+      ...result,
+      nextPage: result.nextPage ? page * limit : null,
+      queryParams,
+    }
+  }
 
   const {
     response: { products, count },

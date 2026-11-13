@@ -201,7 +201,6 @@ export async function deleteLineItem(lineId: unknown) {
       revalidateTag("cart")
     })
     .catch(medusaError)
-  revalidateTag("cart")
 }
 
 export async function setShippingMethod({
@@ -291,11 +290,7 @@ export async function applyPromotions(codes: string[]) {
     throw new Error("No existing cart found")
   }
 
-  await updateCart({ promo_codes: codes })
-    .then(() => {
-      revalidateTag("cart")
-    })
-    .catch(medusaError)
+  await updateCart({ promo_codes: codes }).catch(medusaError)
 }
 
 export async function removePromotions(codes: string[]) {
@@ -427,7 +422,6 @@ export async function updateRegion(countryCode: string, currentPath: string) {
 
   if (cartId) {
     await updateCart({ region_id: region.id })
-    revalidateTag("cart")
   }
 
   revalidateTag("regions")

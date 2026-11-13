@@ -32,7 +32,7 @@ export const CollectionsSlider: React.FC<{
           key={c.id}
           className="w-[70%] sm:w-[60%] lg:w-full max-w-72 flex-shrink-0"
         >
-          <LocalizedLink href={`/collections/${c.handle}`}>
+          <LocalizedLink href={`/collections/${c.handle}`} prefetch={false}>
             {typeof c.metadata?.image === "object" &&
               c.metadata.image &&
               "url" in c.metadata.image &&

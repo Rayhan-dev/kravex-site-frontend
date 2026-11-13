@@ -20,7 +20,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
         <HoverZoomImage
           key={image.id}
           src={image.url}
-          priority={index <= 2}
+          priority={index === 0}
           alt={`Product image ${index + 1}`}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 589px, (max-width: 1279px) 384px, 456px"
         />

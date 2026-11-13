@@ -132,6 +132,7 @@ export default function ProductPreview({
           {/* Full-image link (behind buttons) */}
           <LocalizedLink
             href={`/products/${product.handle}`}
+            prefetch={false}
             className="absolute inset-0 z-[1]"
             aria-label={product.title}
           />
@@ -187,7 +188,7 @@ export default function ProductPreview({
         </div>
 
         {/* Product info */}
-        <LocalizedLink href={`/products/${product.handle}`} className="block">
+        <LocalizedLink href={`/products/${product.handle}`} prefetch={false} className="block">
           <div className="flex items-start justify-between gap-2 mb-1">
             <p className="font-medium text-base leading-snug">
               {product.title}
